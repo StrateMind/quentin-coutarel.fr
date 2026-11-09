@@ -89,8 +89,9 @@ button { font: inherit; color: inherit; }
 h1 { font-family: var(--f-titre); font-weight: 900; font-stretch: 118%; font-size: clamp(28px, 4.8vw, 58px); line-height: .95; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
 .sous-titre { font-family: var(--f-titre); font-stretch: 90%; margin: 8px 0 0; color: var(--encre-2); font-size: 15px; }
 .legende { display: grid; gap: 6px; font-size: 13px; color: var(--encre-2); justify-items: start; }
-.legende span { display: inline-flex; align-items: center; gap: 8px; }
+.legende > span { display: inline-flex; align-items: center; gap: 8px; }
 .sym { display: inline-block; flex: none; }
+.legende .sym { margin-inline: 3.5px; } /* les symboles font 13px, la pastille E 20px : on aligne les intitulés */
 .sym.st { width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid var(--encre); background: var(--plan); }
 .sym.co { width: 13px; height: 22px; border-radius: 7px; border: 2.5px solid var(--encre); background: var(--plan); }
 .sym.fo { width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid var(--encre); background: radial-gradient(circle, var(--encre) 0 2.5px, var(--plan) 3px); }
@@ -252,7 +253,7 @@ section.bloc { padding-block: clamp(36px, 6vw, 64px); border-top: 1px solid var(
 .puces-bord.fort li { border: 2px solid var(--c, var(--encre)); font-weight: 700; }
 .cherche { margin: 0; padding: 14px 16px; border: 2px dashed var(--encre-3); border-radius: 8px; }
 .familles { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0 0; font-size: 13.5px; color: var(--encre-2); }
-.familles span { display: inline-flex; align-items: center; gap: 6px; }
+.familles > span { display: inline-flex; align-items: center; gap: 6px; }
 .panneaux { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 14px; margin-top: 22px; }
 .panneau { background: var(--plan); border: 1px solid var(--filet); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; transition: opacity .5s; scroll-margin-top: 20px; }
 .panneau.pale { opacity: .45; }
