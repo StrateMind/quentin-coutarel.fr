@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="canonical" href="https://quentin-coutarel.fr/cv/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://quentin-coutarel.fr/cv/">
+<meta property="og:title" content="CV Orbite de Quentin Coutarel">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>CV Orbite de Quentin Coutarel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Mise en page : deux feuilles A4 au style « Orbite » des devis Stratemind (barre dégradée à gauche, grand titre pointé,
+   frise à jalons, grands chiffres, ticket). À l'écran, posées sur un bureau ; à l'étroit, la feuille devient fluide.
+   Le papier reste blanc dans les deux thèmes ; seul le bureau suit le thème. */
+:root{
+  --bureau:#dfe2ea; --bureau-texte:#4a5163; --bureau-trait:#c3c8d5;
+  --papier:#ffffff; --encre:#10162a; --texte:#2b3246; --cap:#5968ff; --elan:#46e1c3; --clarte:#f7f8fc;
+  --muted:#6b7282; --faint:#9aa3b2; --eteint:#c6cbd6; --trait:#e7e9ee; --vert:#0d7a5f;
+  --grad:linear-gradient(90deg,#5968ff,#818bff 58%,#46dcc2);
+  --barre:linear-gradient(180deg,#5968ff,#46e1c3);
+  --f-titre:"Space Grotesk",system-ui,sans-serif;
+  --f-texte:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bureau:#0d1120;--bureau-texte:#aab2c5;--bureau-trait:#2b3247;color-scheme:dark}}
+:root[data-theme="dark"]{--bureau:#0d1120;--bureau-texte:#aab2c5;--bureau-trait:#2b3247;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bureau);color:var(--encre);font:9.6pt/1.5 var(--f-texte);-webkit-print-color-adjust:exact;print-color-adjust:exact;
+  padding-block:24px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,p,ul{margin:0}
+a{color:inherit}
+.mono{font:500 7.6pt var(--f-mono);letter-spacing:.16em;text-transform:uppercase}
+.num{font-variant-numeric:tabular-nums}
+
+/* Le choix du rôle, hors de la feuille */
+.outils{max-width:210mm;margin:0 auto 16px;display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center;color:var(--bureau-texte)}
+.outils .mono{font-size:11px;margin-right:4px}
+.outils button{font:600 13px var(--f-titre);border:1px solid var(--bureau-trait);background:transparent;color:var(--bureau-texte);border-radius:999px;padding:6px 14px;cursor:pointer}
+.outils button[aria-pressed="true"]{background:var(--cap);border-color:var(--cap);color:#fff}
+.outils button:focus-visible{outline:2px solid var(--cap);outline-offset:2px}
+
+/* La feuille */
+.doc{position:relative;width:210mm;min-height:297mm;margin:0 auto 24px;padding:16mm 15mm 18mm 23mm;
+  background:var(--barre) 12mm 16mm / 1.1mm calc(100% - 34mm) no-repeat,var(--papier);box-shadow:0 10px 30px rgba(16,22,42,.16)}
+.pied{position:absolute;left:23mm;right:15mm;bottom:8mm;display:flex;justify-content:space-between;color:var(--faint);font-size:7.4pt}
+
+.o-head{display:flex;justify-content:space-between;align-items:center;gap:6mm;margin-bottom:7mm}
+.marque{display:flex;align-items:center;gap:2.4mm;font:600 12pt var(--f-titre);letter-spacing:-.01em}
+.marque svg{width:8.5mm;height:8.5mm;flex:none}
+.o-head .mono{color:var(--muted)}
+
+.o-grand{font:700 46pt/.92 var(--f-titre);letter-spacing:-.05em;text-wrap:balance}
+.o-grand.long{font-size:34pt;line-height:.98}
+.o-grand.second{font-size:28pt}
+.o-grand em{display:inline-block;width:.19em;height:.19em;margin-left:.05em;border-radius:50%;background:var(--grad)}
+.o-sous{display:flex;justify-content:space-between;align-items:flex-end;gap:8mm;margin:2.6mm 0 3.8mm}
+.o-sous h1{font:500 12.4pt/1.3 var(--f-titre);max-width:122mm;text-wrap:balance}
+.o-sous .meta{text-align:right;color:var(--muted);font-size:8.6pt;flex:none}
+.meta a{text-decoration:none}
+.lead{color:var(--muted);margin-bottom:5mm;max-width:156mm}
+.accroche{font:500 10.6pt/1.4 var(--f-titre);color:var(--texte);margin-bottom:4.4mm;max-width:156mm}
+
+/* La triple casquette, posée comme les montants d'un devis : trois cartes et leur total */
+.o-addition{display:grid;grid-template-columns:minmax(0,1fr) 5mm minmax(0,1fr) 5mm minmax(0,1fr) 5mm minmax(0,1.18fr);margin-bottom:5mm;break-inside:avoid}
+.o-addition .op{display:grid;place-items:center;font:600 13pt var(--f-titre);color:var(--faint)}
+.carte{border-radius:3.7mm;padding:3.2mm 3.4mm;background:var(--clarte);display:flex;flex-direction:column;gap:.8mm;min-width:0}
+.carte .mono{color:var(--muted);font-size:6.6pt;letter-spacing:.1em}
+.carte b{font:700 15pt/1.15 var(--f-titre);white-space:nowrap}
+.carte small{color:var(--muted);font-size:7.6pt;line-height:1.35}
+.carte.fort{background:linear-gradient(135deg,#5968ff,#46c9c3);color:#fff}
+.carte.fort .mono,.carte.fort small{color:rgba(255,255,255,.84)}
+.carte.fort b{white-space:normal;font-size:13.5pt;line-height:1.08;text-wrap:balance}
+
+.rubrique{display:flex;justify-content:space-between;align-items:baseline;gap:4mm;padding-top:2.6mm;border-top:.8pt solid var(--trait);margin-bottom:1mm}
+.rubrique .mono:first-child{color:var(--cap)}
+.rubrique .mono+.mono{color:var(--faint);letter-spacing:.1em}
+
+/* La frise des postes, comme les jalons d'un devis */
+.o-frise{position:relative}
+.o-frise:before{content:"";position:absolute;left:4.2mm;top:6mm;bottom:6mm;width:1.5pt;background:repeating-linear-gradient(180deg,var(--cap) 0 1.3mm,transparent 1.3mm 2.6mm)}
+.o-etape{display:grid;grid-template-columns:9mm minmax(0,1fr) 25mm;gap:3.2mm;align-items:start;padding:1.05mm 0;break-inside:avoid}
+.point{width:9mm;height:9mm;border-radius:50%;border:1.9pt solid var(--cap);display:grid;place-items:center;font:700 10.5pt var(--f-titre);color:var(--cap);background:var(--papier);position:relative;z-index:1}
+.o-etape.premier .point{background:var(--encre);border-color:var(--encre);color:var(--elan)}
+.o-etape .titre{font:600 10.4pt/1.3 var(--f-titre)}
+.o-etape .titre span{font-weight:500;color:var(--muted)}
+.o-etape .ligne-ou{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4mm 3.4mm}
+.o-etape .ou{color:var(--muted);font-size:8pt}
+.casq{display:flex;flex-wrap:wrap;gap:.6mm 2.6mm}
+.casq span{font:500 6.3pt var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--eteint);white-space:nowrap}
+.casq span.on{color:var(--cap)}
+.casq span:before{content:"";display:inline-block;width:1.5mm;height:1.5mm;border-radius:50%;background:currentColor;margin-right:.9mm;vertical-align:.15mm}
+.o-etape ul{list-style:none;padding:0;margin-top:.4mm}
+.o-etape li{position:relative;padding-left:3.2mm;font-size:8.3pt;line-height:1.38;color:var(--texte)}
+.o-etape li:before{content:"";position:absolute;left:0;top:.66em;width:1.6mm;height:.9pt;background:var(--cap)}
+.o-etape .dates{text-align:right;font:600 11pt var(--f-titre);white-space:nowrap}
+.o-etape .dates small{display:block;font:500 6.6pt var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-top:.5mm}
+
+/* Page 2 : réalisations, compétences, formation, ticket */
+.projets{display:grid;grid-template-columns:1fr 1fr;gap:2.6mm;margin-bottom:2.4mm}
+.projet{border-radius:3.4mm;padding:2.7mm 3.6mm;background:var(--clarte);display:flex;flex-direction:column;gap:.4mm;break-inside:avoid;min-width:0}
+.projet .ligne{display:flex;justify-content:space-between;align-items:baseline;gap:3mm}
+.projet b{font:600 10.4pt var(--f-titre)}
+.projet .etat{font:500 6.2pt var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.projet .etat.online{color:var(--vert);text-transform:none;letter-spacing:.04em;font-size:6.8pt;text-decoration:none}
+.projet .tag{color:var(--muted);font-size:8pt;line-height:1.35}
+.projet .preuve{font-size:7.9pt;line-height:1.35;color:var(--texte)}
+.projet .preuve strong{font:600 9.4pt var(--f-titre);margin-right:.8mm;color:var(--encre)}
+.projet .lien{font:500 6.6pt var(--f-mono);letter-spacing:.06em;color:var(--cap);text-decoration:none}
+.aussi{color:var(--muted);font-size:8pt;margin-bottom:4mm}
+
+.bande{display:grid;gap:6mm;padding:3.4mm 0 3.8mm;border-top:.8pt solid var(--trait);break-inside:avoid}
+.bande.trois{grid-template-columns:repeat(3,minmax(0,1fr))}
+.bande.deux{grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:.8pt solid var(--trait);margin-bottom:5mm}
+.bande .pleine{grid-column:1/-1;color:var(--muted);font-size:8pt;margin-top:-2mm}
+.bande .pleine b{font:500 6.8pt var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cap);margin-right:2mm}
+.bande h2{font:500 6.8pt var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cap);margin-bottom:1.6mm}
+.bande ul{list-style:none;padding:0}
+.bande li{font-size:8.3pt;line-height:1.45;color:var(--texte);padding-left:3.2mm;position:relative}
+.bande li:before{content:"";position:absolute;left:0;top:.68em;width:1.6mm;height:.9pt;background:var(--cap)}
+.forma{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.2mm 3mm}
+.forma b{font:600 9.4pt var(--f-titre)}
+.forma small{grid-column:1;color:var(--muted);font-size:7.8pt;line-height:1.35}
+.forma .an{grid-row:1;grid-column:2;font:600 9.4pt var(--f-titre);color:var(--muted)}
+
+.o-ticket{display:flex;border:1.1pt solid var(--encre);border-radius:4.2mm;overflow:hidden;break-inside:avoid}
+.o-ticket .t{flex:1;padding:4.4mm 5.2mm;min-width:0}
+.o-ticket .t b{font:600 12pt var(--f-titre);display:block;margin-bottom:.8mm}
+.o-ticket .t p{color:var(--muted)}
+.actions{display:flex;align-items:center;flex-wrap:wrap;gap:2.4mm 4mm;margin-top:3mm}
+.btn{display:inline-block;background:var(--encre);color:#fff;font-weight:600;padding:2.2mm 4.4mm;border-radius:999px;font-size:9pt;text-decoration:none}
+.courriel{font:500 8pt var(--f-mono);color:var(--encre);user-select:all}
+.enligne{margin-top:2.4mm;font-size:8.2pt;color:var(--muted)}
+.enligne a{color:var(--cap);font-weight:500;text-decoration:none}
+.o-ticket .talon{border-left:1.1pt dashed var(--encre);padding:3.6mm 4.4mm;background:var(--clarte);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1.6mm;width:40mm;flex:none;text-align:center}
+.o-ticket .talon .mono{color:var(--muted);font-size:6.4pt;letter-spacing:.1em}
+.qr{width:24mm;height:24mm;background:var(--papier);padding:1.4mm;border-radius:1.6mm;display:grid;place-items:center}
+.qr svg,.qr img{width:100%;height:100%;display:block}
+.qr .repli{font:500 6pt var(--f-mono);color:var(--muted);word-break:break-all}
+
+@media screen and (max-width:860px){
+  .doc{width:auto;min-height:0;padding:24px 18px 30px 32px;background-position:15px 24px;background-size:3px calc(100% - 54px)}
+  .pied{position:static;margin-top:24px;gap:12px;flex-wrap:wrap}
+  .o-head{margin-bottom:22px;flex-wrap:wrap;gap:6px 16px}
+  .marque{white-space:nowrap}
+  .o-grand{font-size:clamp(34px,10vw,46pt)}
+  .o-grand.long{font-size:clamp(28px,7.6vw,34pt)}
+  .o-sous{flex-direction:column;align-items:flex-start;gap:8px}
+  .o-sous .meta{text-align:left}
+  .o-addition{grid-template-columns:minmax(0,1fr)}
+  .o-addition .op{padding:2px 0;font-size:12pt;line-height:1}
+  .carte b{white-space:normal}
+  .o-etape{grid-template-columns:9mm minmax(0,1fr)}
+  .o-etape .dates{grid-column:2;text-align:left;white-space:normal}
+  .projets,.bande.trois,.bande.deux{grid-template-columns:minmax(0,1fr)}
+  .o-ticket{flex-direction:column}
+  .o-ticket .talon{width:auto;border-left:0;border-top:1.1pt dashed var(--encre);flex-direction:row;justify-content:flex-start;gap:12px;text-align:left}
+}
+
+@page{size:A4;margin:16mm 15mm 18mm 12mm;
+  @bottom-left{content:"Quentin Coutarel · Curriculum vitae · novembre 2026";font:8pt Inter,sans-serif;color:#9aa3b2}
+  @bottom-right{content:counter(page) "/" counter(pages);font:8pt Inter,sans-serif;color:#9aa3b2}}
+@media print{
+  body{background:#fff;padding:0}
+  .outils,.pied{display:none}
+  .doc{width:auto;min-height:0;margin:0;box-shadow:none;padding:0 0 0 11mm;
+    background:var(--barre) 0 0 / 1.1mm 100% no-repeat,#fff;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  .doc+.doc{break-before:page}
+}
+@media (prefers-reduced-motion:no-preference){.outils button{transition:background .15s,color .15s}}
+</style>
+
+<nav class="outils" aria-label="Rôle visé">
+  <span class="mono">Le quatrième rôle</span>
+  <button type="button" id="r-builder" data-role="builder" aria-pressed="true">Product Builder</button>
+  <button type="button" id="r-growth" data-role="growth" aria-pressed="false">Head of Product &amp; Growth</button>
+</nav>
+<main id="feuilles"></main>
+
+<script src="/data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(function () {
+  const C = window.CV;
+  const P = C.person;
+  const ROLES = ["builder", "growth"];
+  const CASQ = [["b", "Business"], ["p", "Projet"], ["d", "Produit"]];
+  const NB_PUCES = { stratemind: 2, mtarget: 2, "1984": 2, lanet: 2 };
+  const NB_PROJETS = 8;
+  const LETTRES = { 6: "six", 8: "huit", 10: "dix" };
+  const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  const MARQUE = `<svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="g-orb" x1="6" y1="34" x2="38" y2="6" gradientUnits="userSpaceOnUse"><stop stop-color="#5968ff"/><stop offset="1" stop-color="#46e1c3"/></linearGradient></defs><circle cx="18" cy="20" r="12.5" fill="none" stroke="url(#g-orb)" stroke-width="3.4"/><path d="M24.5 27.5c5.6-2.4 9.4-7.4 12-14.5" fill="none" stroke="url(#g-orb)" stroke-width="3.4" stroke-linecap="round"/><circle cx="18" cy="20" r="3.6" fill="#10162a"/></svg>`;
+
+  function role() { const h = location.hash.slice(1); return ROLES.includes(h) ? h : "builder"; }
+
+  function mois(s) { const [a, m] = s.split("-").map(Number); return [a, m || 1]; }
+  function duree(e) {
+    const [fa, fm] = mois(e.from);
+    const d = new Date();
+    const [ta, tm] = e.to ? mois(e.to) : [d.getFullYear(), d.getMonth() + 1];
+    const n = (ta - fa) * 12 + (tm - fm) + 1;
+    const a = Math.floor(n / 12), m = n % 12;
+    return [a ? `${a} an${a > 1 ? "s" : ""}` : "", m ? `${m} mois` : ""].filter(Boolean).join(" ");
+  }
+  function periode(e) {
+    const de = e.from.slice(0, 4), a = e.to ? e.to.slice(0, 4) : "auj.";
+    return de === a ? de : `${de} – ${a}`;
+  }
+  function puces(e, L) {
+    const n = NB_PUCES[e.id] || 1;
+    const score = b => [...b.k].filter(c => L.match.includes(c)).length;
+    return e.bullets.map((b, i) => ({ b, i, s: score(b) }))
+      .sort((x, y) => y.s - x.s || x.i - y.i).slice(0, n)
+      .sort((x, y) => x.i - y.i).map(x => x.b.t);
+  }
+  function liste(noms) { return noms.length < 2 ? noms.join("") : noms.slice(0, -1).join(", ") + " et " + noms[noms.length - 1]; }
+
+  function entete() {
+    return `<header class="o-head"><span class="marque">${MARQUE}${esc(P.name)}</span><span class="mono">CV · ${esc(P.edition)}</span></header>`;
+  }
+  function pied(n) {
+    return `<footer class="pied"><span>${esc(P.name)} · Curriculum vitae · ${esc(P.edition)}</span><span class="num">${n}/2</span></footer>`;
+  }
+
+  function feuille1(id, L) {
+    const lb = C.lenses.business, lp = C.lenses.projet, ld = C.lenses.produit;
+    const carte = (l, k) => `<div class="carte"><span class="mono">${esc(l.title)}</span><b class="num">${esc(k[0])}</b><small>${esc(k[1])}</small></div>`;
+    const total = C.experiences.length;
+    const etapes = C.experiences.map((e, i) => {
+      const casq = CASQ.map(([c, nom]) => `<span class="${e.rel[c] >= 2 ? "on" : ""}">${nom}</span>`).join("");
+      const ou = [e.place, e.contract].filter(Boolean).join(" · ");
+      return `<div class="o-etape${i === 0 ? " premier" : ""}">
+        <div class="point num" aria-hidden="true">${total - i}</div>
+        <div>
+          <div class="titre">${esc(e.role)} <span>· ${esc(e.org)}</span></div>
+          <div class="ligne-ou"><span class="ou">${esc(ou)}</span><span class="casq" aria-label="Casquettes portées">${casq}</span></div>
+          <ul>${puces(e, L).map(t => `<li>${esc(t)}</li>`).join("")}</ul>
+        </div>
+        <div class="dates num">${esc(periode(e))}<small>${esc(duree(e))}</small></div>
+      </div>`;
+    }).join("");
+    const long = L.title.length > 18 ? " long" : "";
+    return `<article class="doc" aria-label="Page 1 : profil et parcours">
+      ${entete()}
+      <div class="o-grand${long}">${esc(L.title)}<em></em></div>
+      <div class="o-sous">
+        <h1>Trois métiers exercés tour à tour, réunis aujourd'hui dans un seul rôle.</h1>
+        <div class="meta">${esc(P.city)}<br><a href="mailto:${esc(P.email)}">${esc(P.email)}</a><br><a href="${esc(P.site)}">${esc(P.siteLabel)}</a></div>
+      </div>
+      <p class="accroche">${esc(L.pitch)}</p>
+      <section class="o-addition" aria-label="Les trois casquettes et leur somme">
+        ${carte(lb, lb.kpis[0])}<div class="op" aria-hidden="true">+</div>
+        ${carte(lp, lp.kpis[0])}<div class="op" aria-hidden="true">+</div>
+        ${carte(ld, ld.kpis[0])}<div class="op" aria-hidden="true">=</div>
+        <div class="carte fort"><span class="mono">Le quatrième rôle</span><b>${esc(L.title)}</b><small>les trois métiers dans un seul poste</small></div>
+      </section>
+      <div class="rubrique"><span class="mono">Parcours</span><span class="mono">${total} postes depuis ${esc(C.experiences[total - 1].from.slice(0, 4))}</span></div>
+      <div class="o-frise">${etapes}</div>
+      ${pied(1)}
+    </article>`;
+  }
+
+  function feuille2(id, L) {
+    const choisis = L.projects.slice(0, NB_PROJETS).map(p => C.projects.find(x => x.id === p)).filter(Boolean);
+    const autres = C.projects.filter(p => !choisis.includes(p)).map(p => p.name);
+    const projets = choisis.map(p => `<div class="projet">
+        <div class="ligne"><b>${esc(p.name)}</b>${p.status === "online" && p.url ? `<a class="etat online" href="${esc(p.url)}">${esc(p.urlLabel)}</a>` : `<span class="etat">${esc(p.statusLabel)}</span>`}</div>
+        <div class="tag">${esc(p.tagline)}</div>
+        <div class="preuve"><strong class="num">${esc(p.proof[0][0])}</strong>${esc(p.proof[0][1])}</div>
+      </div>`).join("");
+    const colonnes = ["business", "projet", "produit"].map(k => {
+      const l = C.lenses[k];
+      return `<div><h2>${esc(l.title)}</h2><ul>${l.skills.slice(0, 4).map(s => `<li>${esc(s)}</li>`).join("")}</ul></div>`;
+    }).join("");
+    const enLigne = `${C.links.lumiere}#${id}`;
+    return `<article class="doc" aria-label="Page 2 : réalisations, compétences et contact">
+      ${entete()}
+      <div class="o-grand second">Réalisations<em></em></div>
+      <p class="lead" style="margin-top:2.4mm;margin-bottom:4mm">${cap(LETTRES[choisis.length] || String(choisis.length))} des seize projets conçus et pilotés au studio Stratemind depuis 2025.</p>
+      <section class="projets" aria-label="Projets">${projets}</section>
+      <p class="aussi">Et aussi : ${esc(liste(autres))}.</p>
+      <section class="bande trois" aria-label="Compétences par casquette">${colonnes}<p class="pleine"><b>Qualités</b>${C.traits.map(esc).join(" · ")}</p></section>
+      <section class="bande deux" aria-label="Formation">${C.education.map((f, i) => `<div>${i === 0 ? "<h2>Formation</h2>" : '<h2 aria-hidden="true">&nbsp;</h2>'}<div class="forma"><b>${esc(f.title)}</b><span class="an num">${esc(f.date.slice(0, 4))}</span><small>${esc(f.detail)} · ${esc(f.org)}</small></div></div>`).join("")}</section>
+      <section class="o-ticket" aria-label="Contact">
+        <div class="t">
+          <b>Ce que je cherche</b>
+          <p>${esc(L.seek)}</p>
+          <div class="actions"><a class="btn" href="mailto:${esc(P.email)}">Écrire à ${esc(P.first)} →</a><span class="courriel">${esc(P.email)}</span></div>
+          <p class="enligne">Le même parcours se lit aussi en ligne, <a href="${esc(C.links.lumiere)}#${id}">en lumière</a> ou <a href="${esc(C.links.reseau)}#${id}">en plan de réseau</a>.</p>
+        </div>
+        <div class="talon"><div class="qr" id="qr" data-url="${esc(enLigne)}"></div><span class="mono">Le parcours en ligne</span></div>
+      </section>
+      ${pied(2)}
+    </article>`;
+  }
+
+  function dessinerQR() {
+    const el = document.getElementById("qr");
+    if (!el) return;
+    const url = el.dataset.url;
+    try {
+      const qr = window.qrcode(0, "M");
+      qr.addData(url);
+      qr.make();
+      el.innerHTML = qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true });
+      el.setAttribute("role", "img");
+      el.setAttribute("aria-label", "Code QR vers le parcours en ligne");
+    } catch (err) {
+      el.innerHTML = `<span class="repli">${esc(url)}</span>`;
+    }
+  }
+
+  function rendre() {
+    const id = role();
+    const L = C.lenses[id];
+    document.getElementById("feuilles").innerHTML = feuille1(id, L) + feuille2(id, L);
+    document.querySelectorAll(".outils button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.role === id)));
+    dessinerQR();
+  }
+
+  document.querySelectorAll(".outils button").forEach(b => b.addEventListener("click", () => {
+    if (location.hash.slice(1) === b.dataset.role) return;
+    location.hash = b.dataset.role;
+  }));
+  window.addEventListener("hashchange", rendre);
+  rendre();
+})();
+</script>
+</body>
+</html>

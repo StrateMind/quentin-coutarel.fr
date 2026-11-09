@@ -1,0 +1,1121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="canonical" href="https://quentin-coutarel.fr/lumiere/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://quentin-coutarel.fr/lumiere/">
+<meta property="og:title" content="Quentin Coutarel en lumière">
+<meta property="og:description" content="Le parcours de Quentin Coutarel relu à travers trois projecteurs : Business Developer, Chef de projet, Chef de produit, et leurs mélanges.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Quentin Coutarel en lumière</title>
+<meta name="description" content="Le parcours de Quentin Coutarel relu à travers trois projecteurs : Business Developer, Chef de projet, Chef de produit, et leurs mélanges.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..800&family=Hanken+Grotesk:wght@400;500;600;700&family=Martian+Mono:wght@400;500;600&display=swap">
+<style>
+/* Mise en page : une scène noire (le nom, le disque des trois faisceaux), un pupitre collant avec trois faders,
+   le diagramme de lumière, puis le parcours relu à la couleur de la lumière.
+   Choix délibéré d'un seul thème sombre : la synthèse additive n'existe que dans le noir. */
+:root {
+  --noir: #07080c;
+  --plateau: #0e1017;
+  --plateau-2: #141823;
+  --trait: #262b38;
+  --texte: #eceef4;
+  --texte-2: #a7adbd;
+  --texte-3: #7a8094;
+  --rouge: #ff3b3b;
+  --vert: #2bff70;
+  --bleu: #4a74ff;
+  --chaud: #ffe9c2;
+  --lumiere: #ffffff;
+  --lumiere-texte: #ffffff;
+  --ib: 1; --ip: 1; --id: 1; --plein: 0;
+  --f-titre: "Bodoni Moda", "Bodoni 72", Didot, Georgia, serif;
+  --f-texte: "Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+  --f-console: "Martian Mono", "Cascadia Mono", Consolas, ui-monospace, monospace;
+  --temps: 1.1s;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--noir); }
+body { background: var(--noir); color: var(--texte); font-family: var(--f-texte); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--plateau); }
+a { color: var(--lumiere-texte); text-underline-offset: 3px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--lumiere-texte); outline-offset: 3px; border-radius: 4px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.etiquette { font-family: var(--f-console); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--texte-3); margin: 0; }
+
+/* ---------- Scène ---------- */
+.scene { --cx: 50%; position: relative; overflow: hidden; isolation: isolate; border-bottom: 1px solid var(--trait); }
+/* Le fond noir appartient au groupe des faisceaux : ils s'y ajoutent (écran) et la brume n'apparaît que dans la lumière (incrustation). */
+.faisceaux { position: absolute; inset: 0; pointer-events: none; z-index: -1; background: var(--noir); }
+.faisceaux i { position: absolute; inset: -4% 0 0; mix-blend-mode: screen; filter: blur(14px); transition: opacity .14s linear; }
+.faisceaux .b { opacity: var(--ib); background: linear-gradient(180deg, rgba(255,59,59,.42), rgba(255,59,59,0) 78%); clip-path: polygon(9% 0, 13% 0, calc(var(--cx) + 8%) 100%, calc(var(--cx) - 36%) 100%); }
+.faisceaux .p { opacity: var(--ip); background: linear-gradient(180deg, rgba(43,255,112,.30), rgba(43,255,112,0) 78%); clip-path: polygon(48% 0, 52% 0, calc(var(--cx) + 26%) 100%, calc(var(--cx) - 20%) 100%); }
+.faisceaux .d { opacity: var(--id); background: linear-gradient(180deg, rgba(74,116,255,.46), rgba(74,116,255,0) 78%); clip-path: polygon(87% 0, 91% 0, calc(var(--cx) + 36%) 100%, calc(var(--cx) - 8%) 100%); }
+.faisceaux .poursuite { opacity: var(--plein); transition: opacity var(--temps) ease; background: radial-gradient(ellipse 36% 30% at calc(var(--cx) - 20%) 52%, rgba(255,233,194,.20), rgba(255,233,194,0) 70%); filter: none; }
+.faisceaux .brume { inset: -18%; mix-blend-mode: overlay; filter: none; opacity: .95;
+  background: radial-gradient(38% 26% at 22% 38%, #bdbdbd, transparent 72%), radial-gradient(30% 24% at 68% 58%, #b0b0b0, transparent 70%), radial-gradient(34% 30% at 46% 82%, #545454, transparent 72%), radial-gradient(26% 20% at 84% 28%, #5e5e5e, transparent 70%);
+  animation: derive 42s ease-in-out infinite alternate; }
+@keyframes derive { from { transform: translate3d(-5%, 1%, 0) scale(1.04); } to { transform: translate3d(6%, -3%, 0) scale(1.14); } }
+.scene.lever .faisceaux i, .scene.lever .disque .cercle { transition: opacity var(--temps) ease; }
+.scene.lever .attente { opacity: 0 !important; }
+
+.scene-grille { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(24px, 4vw, 56px); align-items: center; padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 64px); }
+.nom { font-family: var(--f-titre); font-weight: 500; font-style: italic; font-size: clamp(54px, 9.6vw, 128px); line-height: .9; letter-spacing: -.02em; margin: 18px 0 0; text-wrap: balance; font-optical-sizing: auto; }
+.nom span { display: block; }
+.nom span + span { font-style: normal; font-weight: 700; }
+.role { font-family: var(--f-console); font-size: clamp(14px, 1.6vw, 17px); letter-spacing: .08em; text-transform: uppercase; margin: 26px 0 0; color: var(--lumiere-texte); text-shadow: 0 0 22px color-mix(in srgb, var(--lumiere) 55%, transparent); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.role small { font-size: 11px; color: var(--texte-3); text-shadow: none; letter-spacing: .14em; }
+.pitch { font-family: var(--f-titre); font-size: clamp(22px, 2.6vw, 32px); line-height: 1.22; margin: 14px 0 0; max-width: 26ch; text-wrap: balance; }
+.base { margin: 18px 0 0; color: var(--texte-2); max-width: 52ch; }
+/* Dossier de candidature : l'étiquette du réglage préparé, comme une fiche posée sur le pupitre */
+.pour { margin: 22px 0 0; display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; max-width: 100%; padding: 10px 14px; border: 1px dashed var(--lumiere-texte); border-radius: 6px; font-family: var(--f-console); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--texte-3); }
+.pour b { font-weight: 600; font-size: 15px; letter-spacing: .06em; color: var(--texte); overflow-wrap: anywhere; }
+.pour a { color: var(--lumiere-texte); font-size: 12px; letter-spacing: .03em; text-transform: none; }
+.pour #pourPoste:empty { display: none; }
+.lien-imprimer { border: 0; background: none; padding: 0; cursor: pointer; font-family: var(--f-console); font-size: 12px; letter-spacing: .03em; text-transform: none; color: var(--lumiere-texte); text-decoration: underline; text-underline-offset: 3px; }
+.imprimer { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 4px 0 0; }
+.imprimer span { font-size: 13px; color: var(--texte-3); }
+
+.disque { width: 100%; max-width: 420px; justify-self: center; }
+.disque svg { display: block; width: 100%; height: auto; overflow: visible; }
+.disque .cercle { cursor: pointer; transition: opacity .14s linear; }
+.disque .cercle[data-c="b"] { opacity: calc(.07 + .93 * var(--ib)); }
+.disque .cercle[data-c="p"] { opacity: calc(.07 + .93 * var(--ip)); }
+.disque .cercle[data-c="d"] { opacity: calc(.07 + .93 * var(--id)); }
+.disque .contour { fill: none; stroke: var(--trait); stroke-width: 1.2; stroke-dasharray: 3 5; }
+.disque .nomc { font-family: var(--f-console); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; fill: var(--texte-2); cursor: pointer; }
+.disque .nomc.on { fill: var(--texte); }
+.disque .inter { font-family: var(--f-console); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; fill: #07080c; font-weight: 600; opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+.disque .inter.on { opacity: .82; }
+.legende-disque { margin: 10px 0 0; text-align: center; font-family: var(--f-console); font-size: 11px; color: var(--texte-3); letter-spacing: .06em; }
+
+/* ---------- Pupitre ---------- */
+.pupitre { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in srgb, var(--plateau) 93%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--trait); }
+.pupitre-in { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; padding-block: 10px; }
+.groupe { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.groupe > .etiquette { margin-right: 4px; }
+.faders { gap: 8px 18px; }
+.fader { display: inline-grid; grid-template-columns: auto auto 112px 3ch; align-items: center; gap: 7px; font-family: var(--f-console); font-size: 12px; letter-spacing: .03em; cursor: pointer; }
+.fader .ch { color: var(--texte-3); }
+.fader output { color: var(--texte-2); text-align: right; font-variant-numeric: tabular-nums; }
+.fader[data-c="b"] { --c: var(--rouge); } .fader[data-c="p"] { --c: var(--vert); } .fader[data-c="d"] { --c: var(--bleu); }
+.fader input { -webkit-appearance: none; appearance: none; width: 100%; height: 26px; margin: 0; background: transparent; cursor: pointer; --v: 100%; }
+.fader input::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--c) var(--v), #232836 var(--v)); box-shadow: inset 0 1px 2px #000; }
+.fader input::-moz-range-track { height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--c) var(--v), #232836 var(--v)); }
+.fader input::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 24px; margin-top: -9px; border-radius: 3px; border: 1px solid #000; background: linear-gradient(90deg, transparent 6px, #15171d 6px 8px, transparent 8px), linear-gradient(#f1f3f8, #8c93a4); box-shadow: 0 2px 5px #000c; }
+.fader input::-moz-range-thumb { width: 12px; height: 22px; border-radius: 3px; border: 1px solid #000; background: linear-gradient(90deg, transparent 5px, #15171d 5px 7px, transparent 7px), linear-gradient(#f1f3f8, #8c93a4); box-shadow: 0 2px 5px #000c; }
+.fader input:focus-visible { outline: 2px solid var(--lumiere-texte); outline-offset: 2px; }
+.mem { display: inline-flex; align-items: baseline; gap: 6px; padding: 7px 10px; border-radius: 6px; border: 1px solid var(--trait); background: transparent; cursor: pointer; font-family: var(--f-console); font-size: 12px; color: var(--texte-2); }
+.mem b { font-weight: 600; color: var(--texte); }
+.mem[aria-pressed="true"] { border-color: var(--lumiere-texte); color: var(--texte); box-shadow: inset 0 0 0 1px var(--lumiere-texte), 0 0 16px color-mix(in srgb, var(--lumiere) 25%, transparent); }
+.go { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 6px; border: 1px solid var(--lumiere-texte); background: transparent; cursor: pointer; font-family: var(--f-console); font-size: 12px; color: var(--texte); white-space: nowrap; }
+.go:hover, .go[aria-pressed="true"] { background: color-mix(in srgb, var(--lumiere) 16%, transparent); }
+.lecture { margin-left: auto; font-family: var(--f-console); font-size: 11.5px; color: var(--texte-2); letter-spacing: .03em; display: flex; gap: 10px; flex-wrap: wrap; }
+.lecture b { color: var(--lumiere-texte); font-weight: 500; }
+.avance { height: 2px; }
+.avance i { display: block; height: 100%; width: 0; background: var(--lumiere-texte); box-shadow: 0 0 8px var(--lumiere); }
+
+/* ---------- Sections ---------- */
+section.bloc { padding-block: clamp(48px, 7vw, 88px); border-bottom: 1px solid var(--trait); }
+.bloc-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: clamp(24px, 4vw, 40px); }
+h2 { font-family: var(--f-titre); font-weight: 500; font-size: clamp(34px, 4.6vw, 56px); line-height: 1; margin: 6px 0 0; letter-spacing: -.01em; text-wrap: balance; }
+h2 em { color: var(--lumiere-texte); }
+.note { color: var(--texte-3); font-size: 14px; max-width: 46ch; margin: 0; }
+
+/* Profil */
+.profil { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); }
+.resume { font-size: clamp(17px, 1.5vw, 19px); line-height: 1.6; margin: 0; max-width: 62ch; }
+.cherche { margin: 22px 0 0; padding: 16px 18px; border-left: 2px solid var(--lumiere-texte); background: var(--plateau); color: var(--texte-2); max-width: 62ch; }
+.cherche strong { color: var(--texte); font-weight: 600; }
+.chiffres { display: grid; gap: 22px; align-content: start; margin: 0; }
+.chiffre { display: grid; grid-template-columns: minmax(0, 9ch) minmax(0, 1fr); gap: 16px; align-items: baseline; padding-bottom: 18px; border-bottom: 1px solid var(--trait); }
+.chiffre dt { font-family: var(--f-titre); font-weight: 600; font-size: clamp(30px, 3.4vw, 42px); line-height: 1; color: var(--lumiere-texte); text-shadow: 0 0 26px color-mix(in srgb, var(--lumiere) 40%, transparent); font-variant-numeric: lining-nums; white-space: nowrap; }
+.chiffre dd { margin: 0; color: var(--texte-2); font-size: 15px; }
+.qualites { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; padding: 0; list-style: none; }
+.qualites li { font-size: 13px; color: var(--texte-2); border: 1px solid var(--trait); border-radius: 999px; padding: 4px 11px; }
+
+/* Diagramme de lumière */
+.diag { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.triangle { position: relative; width: 100%; max-width: 640px; aspect-ratio: 600 / 540; justify-self: center; }
+.triangle canvas, .triangle svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.triangle svg { overflow: visible; }
+.tri-bord { fill: none; stroke: #3a4152; stroke-width: 1.5; }
+.repere { cursor: pointer; }
+.repere circle { fill: var(--noir); stroke: var(--texte-2); stroke-width: 1.5; }
+.repere .anneau { fill: none; stroke: #0007; stroke-width: 1.5; stroke-dasharray: 3 4; }
+.repere text { font-family: var(--f-console); font-size: 12.5px; letter-spacing: .1em; text-transform: uppercase; fill: var(--texte-2); }
+.repere.on text { fill: var(--texte); }
+.repere:hover text, .repere:focus-visible text { fill: var(--lumiere-texte); }
+.repere:focus-visible { outline: none; }
+.repere:focus-visible circle { stroke: var(--lumiere-texte); stroke-width: 3; }
+.pt { cursor: pointer; transition: opacity .2s linear; }
+.pt .forme { fill: #ffffff; stroke: #07080c; stroke-width: 2; transition: fill .2s; }
+.pt text { font-family: var(--f-texte); font-weight: 600; font-size: 13px; fill: #ffffff; paint-order: stroke; stroke: rgba(7, 8, 12, .86); stroke-width: 4px; stroke-linejoin: round; pointer-events: none; }
+.pt.exp text { font-family: var(--f-titre); font-style: italic; font-size: 16px; }
+.pt:hover .forme, .pt:focus-visible .forme, .pt.vu .forme { fill: var(--chaud); }
+.pt:focus-visible { outline: none; }
+.curseur circle { fill: none; stroke: #fff; stroke-width: 2.5; }
+.curseur .halo { stroke: #07080c; stroke-width: 6; opacity: .55; }
+.diag-cote { display: grid; gap: 16px; align-content: center; }
+.diag-legende { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: var(--texte-2); font-size: 14.5px; }
+.diag-legende li { display: flex; gap: 10px; align-items: baseline; }
+.diag-legende .g { width: 18px; flex: none; text-align: center; color: var(--texte); }
+.survol { margin: 0; min-height: 4.8em; padding: 14px 16px; background: var(--plateau); border: 1px solid var(--trait); border-radius: 8px; color: var(--texte-2); font-size: 15px; }
+.survol strong { color: var(--texte); font-weight: 600; }
+
+/* Parcours */
+.parcours { display: grid; gap: 14px; }
+.exp { --gel: #ffffff; position: relative; display: grid; grid-template-columns: 148px minmax(0, 1fr); gap: clamp(16px, 3vw, 36px); padding: 24px clamp(16px, 2.4vw, 28px); background: var(--plateau); border: 1px solid var(--trait); border-radius: 10px; transition: opacity .22s linear, border-color .22s linear, box-shadow .22s linear; box-shadow: 0 0 0 0 transparent; scroll-margin-top: 140px; }
+.exp::before { content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 3px; border-radius: 0 3px 3px 0; background: var(--gel); box-shadow: 0 0 18px var(--gel); }
+.exp.eclaire { border-color: color-mix(in srgb, var(--gel) 32%, var(--trait)); box-shadow: 0 0 46px -18px var(--gel); }
+.exp-date { font-family: var(--f-console); font-size: 13px; color: var(--texte-2); line-height: 1.5; }
+.exp-date .duree { display: block; color: var(--texte-3); font-size: 11.5px; margin-top: 4px; }
+.gel { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-family: var(--f-console); font-size: 10.5px; color: var(--texte-3); letter-spacing: .03em; }
+.gel i { width: 14px; height: 14px; border-radius: 50%; background: var(--gel); box-shadow: 0 0 10px var(--gel); flex: none; }
+.exp h3 { font-family: var(--f-titre); font-weight: 600; font-size: clamp(22px, 2.3vw, 28px); line-height: 1.12; margin: 0; }
+.exp .org { margin: 4px 0 0; color: var(--texte-2); font-size: 15px; }
+.exp .phrase { margin: 14px 0 0; font-size: 17px; color: var(--texte); max-width: 62ch; }
+.puces { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 8px; max-width: 70ch; }
+.puces li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 8px; font-size: 15px; color: var(--texte-2); transition: opacity .22s linear, color .22s linear; }
+.puces li.allumee { color: var(--texte); }
+.puces li.poursuivie { color: var(--chaud); }
+.puces li.poursuivie .points::after { content: "✦"; color: var(--chaud); margin-left: 2px; font-size: 10px; }
+.points { display: inline-flex; gap: 3px; padding-top: 7px; }
+.points i { width: 7px; height: 7px; border-radius: 50%; background: var(--trait); }
+.points i.a.b { background: var(--rouge); opacity: calc(.22 + .78 * var(--ib)); box-shadow: 0 0 calc(7px * var(--ib)) var(--rouge); }
+.points i.a.p { background: var(--vert); opacity: calc(.22 + .78 * var(--ip)); box-shadow: 0 0 calc(7px * var(--ip)) var(--vert); }
+.points i.a.d { background: var(--bleu); opacity: calc(.22 + .78 * var(--id)); box-shadow: 0 0 calc(7px * var(--id)) var(--bleu); }
+
+/* Projets */
+.projets { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 14px; }
+.proj { --gel: #fff; display: flex; flex-direction: column; gap: 10px; padding: 22px; background: var(--plateau); border: 1px solid var(--trait); border-radius: 10px; transition: opacity .22s linear, border-color .22s linear, box-shadow .22s linear; min-width: 0; scroll-margin-top: 140px; }
+.proj.eclaire { border-color: color-mix(in srgb, var(--gel) 30%, var(--trait)); box-shadow: 0 0 52px -24px var(--gel); }
+.signal { animation: signal 1.6s ease; }
+@keyframes signal { 0%, 35% { box-shadow: 0 0 0 2px var(--chaud), 0 0 70px -12px var(--chaud); opacity: 1; } 100% { box-shadow: 0 0 0 0 transparent; } }
+.proj-tete { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.statut { font-family: var(--f-console); font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--texte-2); display: inline-flex; align-items: center; gap: 6px; }
+.statut::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--texte-3); }
+.statut.online::before { background: #6dffa5; box-shadow: 0 0 8px #6dffa5; }
+.statut.beta::before { background: #ffd56b; }
+.statut.dev::before { background: #8fb0ff; }
+.proj h3 { font-family: var(--f-titre); font-style: italic; font-weight: 600; font-size: 28px; line-height: 1.05; margin: 2px 0 0; }
+.proj .accroche { margin: 0; color: var(--texte); font-weight: 600; font-size: 15px; }
+.proj .quoi { margin: 0; color: var(--texte-2); font-size: 14.5px; }
+.preuves { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; margin: 6px 0 0; padding-top: 14px; border-top: 1px solid var(--trait); }
+.preuves div { min-width: 0; }
+.preuves dt { font-family: var(--f-titre); font-weight: 700; font-size: 22px; line-height: 1.05; color: var(--gel); }
+.preuves dd { margin: 4px 0 0; font-size: 12.5px; color: var(--texte-3); line-height: 1.4; }
+.proj .pied { margin-top: auto; padding-top: 6px; display: flex; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--f-console); font-size: 11px; color: var(--texte-3); }
+.proj .pied a { color: var(--texte); }
+
+/* Formation et compétences */
+.deux { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 72px); }
+.formations { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.formations li { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--trait); transition: opacity .22s linear; }
+.formations .an { font-family: var(--f-console); font-size: 13px; color: var(--texte-2); padding-top: 3px; }
+.formations strong { display: block; font-family: var(--f-titre); font-size: 21px; font-weight: 600; line-height: 1.2; }
+.formations span { display: block; color: var(--texte-2); font-size: 14.5px; }
+.competences { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.competences li { padding: 8px 14px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--lumiere) 40%, var(--trait)); color: var(--texte); font-size: 14.5px; background: color-mix(in srgb, var(--lumiere) 7%, var(--plateau)); }
+h3.petit { font-family: var(--f-console); font-weight: 500; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--texte-3); margin: 0 0 14px; }
+
+/* Contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px 48px; align-items: end; }
+.contact h2 { font-size: clamp(40px, 6vw, 76px); }
+.coord { display: grid; gap: 10px; justify-items: start; }
+.courriel { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.courriel code { font-family: var(--f-console); font-size: clamp(15px, 1.6vw, 18px); color: var(--texte); user-select: all; background: var(--plateau-2); border: 1px solid var(--trait); padding: 9px 12px; border-radius: 6px; word-break: break-all; }
+.bouton { padding: 9px 14px; border-radius: 6px; border: 1px solid var(--lumiere-texte); background: transparent; cursor: pointer; font-family: var(--f-console); font-size: 12px; color: var(--texte); }
+.bouton:hover { background: color-mix(in srgb, var(--lumiere) 12%, transparent); }
+.coord p { margin: 0; color: var(--texte-2); }
+footer { padding-block: 32px 48px; color: var(--texte-3); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+footer a { color: var(--texte-2); }
+
+@media (max-width: 1100px) {
+  .faders { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; gap: 2px 18px; }
+  .faders > .etiquette, .memoires > .etiquette, .lecture { display: none; }
+  .fader { grid-template-columns: auto auto minmax(0, 1fr) 3ch; }
+}
+@media (max-width: 860px) {
+  .scene-grille, .profil, .deux, .contact, .diag { grid-template-columns: minmax(0, 1fr); }
+  .disque { max-width: 330px; }
+  .exp { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .exp-date { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: baseline; }
+  .exp-date .duree { display: inline; margin: 0; }
+  .gel { margin-top: 0; }
+  .pupitre-in { gap: 8px 12px; padding-block: 8px; }
+  .faders { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; gap: 0 14px; }
+  .faders > .etiquette, .fader .ch, .memoires > .etiquette, .lecture, .mem .long, .go .long { display: none; }
+  .fader { grid-template-columns: minmax(0, 1fr) auto; gap: 0 6px; }
+  .fader .fnom { grid-row: 1; grid-column: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fader output { grid-row: 1; grid-column: 2; }
+  .fader input { grid-row: 2; grid-column: 1 / -1; }
+  .exp, .proj { scroll-margin-top: 120px; }
+}
+@media (max-width: 600px) {
+  .pt.proj text { display: none; }
+  .pt.exp text { font-size: 23px; }
+  .repere text { font-size: 19px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0s !important; transition-delay: 0s !important; }
+  .faisceaux .brume { animation: none; }
+  .signal { animation: none; }
+}
+
+/* Fiche de régie : une feuille A4 tirée selon le réglage des projecteurs, comme la feuille de conduite d'un régisseur.
+   Invisible à l'écran ; à l'impression, elle est seule. Papier blanc, encre noire, les trois gélatines en couleur. */
+.regie { display: none; position: relative; width: 210mm; height: 296.6mm; overflow: hidden; margin: 0 auto; padding: 11mm 13mm 14mm; background: #fff; color: #14161c; font-family: var(--f-texte); font-size: 8.2pt; line-height: 1.36; -webkit-print-color-adjust: exact; print-color-adjust: exact; color-scheme: light; }
+.regie h1, .regie h2, .regie p, .regie ul { margin: 0; }
+.regie ul { padding: 0; list-style: none; }
+.regie h2 { font: 600 7pt var(--f-console); letter-spacing: .14em; text-transform: uppercase; }
+.r-etiq { font: 500 6.3pt var(--f-console); letter-spacing: .14em; text-transform: uppercase; color: #6b7080; }
+.r-tete { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6mm; align-items: start; padding-bottom: 3.2mm; border-bottom: 1.2pt solid #14161c; }
+.r-nom { font: 700 27pt/1 var(--f-titre); letter-spacing: -.01em; margin-top: 1.6mm !important; }
+.r-nom i { font-weight: 500; }
+.r-role { font: 600 8.8pt var(--f-console); letter-spacing: .08em; text-transform: uppercase; margin-top: 2mm !important; }
+.r-coord { margin-top: 1.2mm !important; color: #4a4f5c; font-size: 7.8pt; }
+.r-pour { display: flex; gap: 4mm; align-items: flex-start; }
+.r-pour-txt { display: grid; gap: .9mm; justify-items: end; text-align: right; max-width: 52mm; }
+.r-ent { font: 600 9.8pt/1.15 var(--f-console); letter-spacing: .04em; text-transform: uppercase; }
+.r-vise { font: 500 7pt var(--f-console); letter-spacing: .06em; text-transform: uppercase; color: #4a4f5c; }
+.r-qr-note { font-size: 6.6pt; color: #6b7080; margin-top: 1.2mm !important; max-width: 56mm; }
+.r-qr { width: 20mm; height: 20mm; flex: none; }
+.r-qr svg { display: block; width: 100%; height: 100%; }
+.r-projo { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; gap: 5mm; align-items: center; padding: 2.8mm 0; border-bottom: .5pt solid #d5d8de; }
+.r-ch { display: grid; grid-template-columns: minmax(0, 1fr) 7mm; gap: .9mm 2mm; align-items: center; font: 500 6.8pt var(--f-console); }
+.r-ch > span:first-child { grid-column: 1 / -1; letter-spacing: .06em; }
+.r-barre { height: 2.4mm; background: #eceef2; border-radius: .6mm; overflow: hidden; }
+.r-barre i { display: block; height: 100%; background: var(--g); }
+.r-ch b { text-align: right; font-weight: 600; }
+.r-mem { max-width: 62mm; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 600 6.6pt var(--f-console); letter-spacing: .06em; text-transform: uppercase; padding: 1.1mm 2.2mm; border: .6pt solid #14161c; border-radius: 1mm; }
+.r-profil { display: grid; grid-template-columns: 60mm minmax(0, 1fr); gap: 6mm; padding: 3mm 0 3.2mm; }
+.r-pitch { font: italic 500 12pt/1.24 var(--f-titre); }
+.r-resume { color: #3a3e48; font-size: 7.9pt; }
+.r-titre { display: flex; align-items: baseline; justify-content: space-between; gap: 4mm; padding-top: 2mm; border-top: 1.2pt solid #14161c; }
+.r-titre span { font-size: 6.9pt; color: #6b7080; }
+.r-ligne { display: grid; grid-template-columns: 7mm minmax(0, 1fr) 35mm 24mm; gap: .5mm 3mm; align-items: baseline; padding: 1.5mm 0; border-bottom: .5pt solid #e3e5ea; }
+.r-entete { font: 500 6pt var(--f-console); letter-spacing: .12em; text-transform: uppercase; color: #6b7080; padding: 1.3mm 0 .9mm; }
+.r-n { font: 600 7.2pt var(--f-console); }
+.r-poste b { font-weight: 700; }
+.r-lieu { color: #6b7080; }
+.r-per { font: 400 6.7pt var(--f-console); color: #4a4f5c; }
+.r-niv { display: grid; grid-template-columns: minmax(0, 1fr) 6mm; gap: 1.6mm; align-items: center; font: 600 6.7pt var(--f-console); }
+.r-niv b { text-align: right; }
+.r-piste { height: 2mm; background: #eceef2; border-radius: .5mm; overflow: hidden; }
+.r-piste i { display: block; height: 100%; background: #14161c; }
+.r-note { grid-column: 2 / -1; color: #2a2e38; }
+.r-note p { font: italic 500 8.4pt/1.3 var(--f-titre); }
+.r-note ul { display: grid; gap: .3mm; margin-top: .5mm; }
+.r-note li { position: relative; padding-left: 3mm; font-size: 7.4pt; line-height: 1.3; }
+.r-note li::before { content: ""; position: absolute; left: .4mm; top: .52em; width: 1.3mm; height: 1.3mm; border-radius: 50%; background: #14161c; }
+.r-ligne.ombre { color: #9aa0ad; padding: 1.05mm 0; }
+.r-ligne.ombre .r-lieu, .r-ligne.ombre .r-per { color: #b0b5c0; }
+.r-ligne.ombre .r-piste i { background: #b9bdc8; }
+.r-bas { display: grid; grid-template-columns: 1.3fr 1fr 1fr; gap: 6mm; margin-top: 3mm; padding-top: 2.2mm; border-top: 1.2pt solid #14161c; }
+.r-bas h2 { margin-bottom: 1.3mm !important; }
+.r-bas li { font-size: 7.2pt; line-height: 1.3; margin-bottom: .9mm; }
+.r-bas li b { font-weight: 700; }
+.r-form span { font: 600 6.6pt var(--f-console); margin-right: 1.4mm; }
+.r-cherche { font-size: 7.2pt; line-height: 1.3; margin-bottom: 2.6mm !important; }
+.r-kpi li { display: grid; grid-template-columns: 19mm minmax(0, 1fr); gap: 2mm; align-items: baseline; }
+.r-kpi b { font: 600 9.6pt/1 var(--f-titre); font-variant-numeric: lining-nums; white-space: nowrap; }
+.r-pied { position: absolute; left: 13mm; right: 13mm; bottom: 6mm; margin: 0; padding: 1.4mm 0 0 !important; display: flex; justify-content: space-between; gap: 6mm; padding-top: 1.4mm; border-top: .5pt solid #d5d8de; font: 500 6.2pt var(--f-console); letter-spacing: .06em; color: #6b7080; }
+@page { size: A4; margin: 0; }
+@media print {
+  html, body { background: #fff !important; }
+  body::before { display: none !important; }
+  body > :not(.regie) { display: none !important; }
+  .regie { display: block; }
+}
+</style>
+
+<div class="scene" id="scene">
+  <div class="faisceaux" aria-hidden="true"><i class="b"></i><i class="p"></i><i class="d"></i><i class="poursuite"></i><i class="brume"></i></div>
+  <div class="wrap scene-grille">
+    <div>
+      <p class="etiquette">Conduite lumière · édition <span id="edition"></span></p>
+      <h1 class="nom"><span id="prenom"></span><span id="nomFamille"></span></h1>
+      <p class="role" id="role"></p>
+      <p class="pitch" id="pitch"></p>
+      <p class="base" id="base"></p>
+      <p class="pour" id="pour" hidden><span>Réglage préparé pour</span><b id="pourEntreprise"></b><span id="pourPoste"></span><a id="pourReseau" target="_blank" rel="noopener">Le même dossier en plan de réseau ↗</a><button type="button" class="lien-imprimer" data-imprimer>Imprimer la fiche de régie</button></p>
+    </div>
+    <div class="disque">
+      <svg viewBox="0 0 400 400" aria-hidden="true">
+        <defs>
+          <radialGradient id="gr"><stop offset="0" stop-color="#ff3b3b"/><stop offset=".8" stop-color="#ff3b3b"/><stop offset="1" stop-color="#ff3b3b" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gp"><stop offset="0" stop-color="#2bff70"/><stop offset=".8" stop-color="#2bff70"/><stop offset="1" stop-color="#2bff70" stop-opacity="0"/></radialGradient>
+          <radialGradient id="gd"><stop offset="0" stop-color="#4a74ff"/><stop offset=".8" stop-color="#4a74ff"/><stop offset="1" stop-color="#4a74ff" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle class="contour" cx="155" cy="168" r="112"/>
+        <circle class="contour" cx="245" cy="168" r="112"/>
+        <circle class="contour" cx="200" cy="246" r="112"/>
+        <g style="isolation:isolate">
+          <circle class="cercle" data-c="b" cx="155" cy="168" r="118" fill="url(#gr)" style="mix-blend-mode:screen"/>
+          <circle class="cercle" data-c="p" cx="245" cy="168" r="118" fill="url(#gp)" style="mix-blend-mode:screen"/>
+          <circle class="cercle" data-c="d" cx="200" cy="246" r="118" fill="url(#gd)" style="mix-blend-mode:screen"/>
+        </g>
+        <text class="inter" data-pair="bp" x="200" y="128" text-anchor="middle">Client</text>
+        <text class="inter" data-pair="pd" x="246" y="236" text-anchor="middle">PO</text>
+        <text class="inter" data-pair="bd" x="154" y="236" text-anchor="middle">Marketing</text>
+        <text class="inter" data-pair="bpd" x="200" y="196" text-anchor="middle">Builder</text>
+        <text class="nomc" data-c="b" x="44" y="40">Business</text>
+        <text class="nomc" data-c="p" x="356" y="40" text-anchor="end">Projet</text>
+        <text class="nomc" data-c="d" x="200" y="396" text-anchor="middle">Produit</text>
+      </svg>
+      <p class="legende-disque">Touchez un faisceau pour l'allumer ou l'éteindre</p>
+    </div>
+  </div>
+</div>
+
+<div class="pupitre" role="region" aria-label="Pupitre lumière">
+  <div class="wrap pupitre-in">
+    <div class="groupe faders" role="group" aria-label="Projecteurs">
+      <span class="etiquette">Faders</span>
+      <label class="fader" data-c="b"><span class="ch">CH1</span><span class="fnom">Business</span><input type="range" id="fader-b" min="0" max="100" step="1" value="100" aria-label="Intensité du projecteur Business"><output id="val-b" for="fader-b">100</output></label>
+      <label class="fader" data-c="p"><span class="ch">CH2</span><span class="fnom">Projet</span><input type="range" id="fader-p" min="0" max="100" step="1" value="100" aria-label="Intensité du projecteur Projet"><output id="val-p" for="fader-p">100</output></label>
+      <label class="fader" data-c="d"><span class="ch">CH3</span><span class="fnom">Produit</span><input type="range" id="fader-d" min="0" max="100" step="1" value="100" aria-label="Intensité du projecteur Produit"><output id="val-d" for="fader-d">100</output></label>
+    </div>
+    <div class="groupe memoires" role="group" aria-label="Mémoires">
+      <span class="etiquette">Mémoires</span>
+      <button type="button" class="mem" id="mem-business" data-lens="business" aria-pressed="false"><b>1</b><span class="long">Business Dev</span></button>
+      <button type="button" class="mem" id="mem-projet" data-lens="projet" aria-pressed="false"><b>2</b><span class="long">Projet</span></button>
+      <button type="button" class="mem" id="mem-produit" data-lens="produit" aria-pressed="false"><b>3</b><span class="long">Produit</span></button>
+      <button type="button" class="mem" id="mem-builder" data-lens="builder" aria-pressed="true"><b>4</b><span class="long">Builder</span></button>
+      <button type="button" class="mem" id="mem-growth" data-lens="growth" aria-pressed="false"><b>5</b><span class="long">Plein feu</span></button>
+      <button type="button" class="mem" id="mem-dossier" aria-pressed="false" hidden><b>6</b><span class="long" id="memDossierNom"></span></button>
+    </div>
+    <button type="button" class="go" id="conduite" aria-pressed="false"></button>
+    <div class="lecture" aria-live="polite"><span id="lectMem"></span><b id="lectRole"></b><span id="lectRvb"></span></div>
+  </div>
+  <div class="avance" aria-hidden="true"><i id="avance"></i></div>
+</div>
+
+<main>
+  <section class="bloc" id="profil" aria-labelledby="t-profil">
+    <div class="wrap">
+      <div class="bloc-tete">
+        <div><p class="etiquette">Le profil</p><h2 id="t-profil">Sous la lumière <em id="profilRole"></em></h2></div>
+      </div>
+      <div class="profil">
+        <div>
+          <p class="resume" id="resume"></p>
+          <p class="cherche" id="cherche"></p>
+          <ul class="qualites" id="qualites"></ul>
+        </div>
+        <dl class="chiffres" id="chiffres"></dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc" id="diagramme" aria-labelledby="t-diag">
+    <div class="wrap">
+      <div class="bloc-tete">
+        <div><p class="etiquette">Le diagramme de lumière</p><h2 id="t-diag">Où se place <em>chaque expérience</em></h2></div>
+        <p class="note">Chaque point est placé selon le mélange de métiers qu'il demande : près d'un sommet, un seul métier ; au centre, les trois à parts égales. Les couleurs suivent les faders.</p>
+      </div>
+      <div class="diag">
+        <div class="triangle">
+          <canvas id="toile" width="300" height="270" aria-hidden="true"></canvas>
+          <svg id="tri" viewBox="0 0 600 540" role="group" aria-label="Diagramme : expériences et projets placés entre Business, Projet et Produit"></svg>
+        </div>
+        <div class="diag-cote">
+          <ul class="diag-legende">
+            <li><span class="g">●</span>une expérience</li>
+            <li><span class="g">✦</span>un projet du studio Stratemind</li>
+            <li><span class="g">◯</span>le mélange des projecteurs en ce moment</li>
+          </ul>
+          <p class="survol" id="survol"></p>
+          <p class="note">Touchez un repère (Business, Client, PO…) pour rappeler sa mémoire, ou un point pour lire sa carte.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc" id="parcours" aria-labelledby="t-parcours">
+    <div class="wrap">
+      <div class="bloc-tete">
+        <div><p class="etiquette">Le parcours</p><h2 id="t-parcours">Ce que la lumière <em>révèle</em></h2></div>
+        <p class="note">Chaque ligne porte ses couleurs. Ce qui sert le poste s'allume, le reste passe dans l'ombre. Sous chaque expérience, la couleur de sa gélatine : son mélange de rôles.</p>
+      </div>
+      <div class="parcours" id="listeExp"></div>
+    </div>
+  </section>
+
+  <section class="bloc" id="projets" aria-labelledby="t-projets">
+    <div class="wrap">
+      <div class="bloc-tete">
+        <div><p class="etiquette">Les réalisations du studio Stratemind</p><h2 id="t-projets"><span id="nbProjets"></span> projets, <em>rangés par la lumière</em></h2></div>
+        <p class="note">Conçus et pilotés au studio, du prototype au service en ligne. Les plus utiles au poste viennent en premier.</p>
+      </div>
+      <div class="projets" id="listeProj"></div>
+    </div>
+  </section>
+
+  <section class="bloc" id="formation" aria-labelledby="t-formation">
+    <div class="wrap deux">
+      <div>
+        <p class="etiquette">Formation et certifications</p>
+        <h2 id="t-formation">Les <em>bases</em></h2>
+        <ul class="formations" id="listeForm" style="margin-top:24px"></ul>
+      </div>
+      <div>
+        <p class="etiquette">Compétences</p>
+        <h2>Les <em>outils</em></h2>
+        <div style="margin-top:24px">
+          <h3 class="petit" id="compTitre"></h3>
+          <ul class="competences" id="listeComp"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bloc" id="contact" aria-labelledby="t-contact">
+    <div class="wrap contact">
+      <div>
+        <p class="etiquette">La régie</p>
+        <h2 id="t-contact">On rallume <em>ensemble ?</em></h2>
+      </div>
+      <div class="coord">
+        <div class="courriel"><code id="courriel"></code><button type="button" class="bouton" id="copier">Copier l'adresse</button></div>
+        <p id="ville"></p>
+        <p><a id="site" target="_blank" rel="noopener"></a></p>
+        <p class="imprimer"><button type="button" class="bouton" data-imprimer>Imprimer la fiche de régie</button><span>Une feuille A4 tirée selon le réglage des projecteurs.</span></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span id="signature"></span>
+    <nav id="autres" aria-label="Le même parcours, autrement"></nav>
+  </div>
+</footer>
+
+<section class="regie" id="regie" aria-label="Fiche de régie, pour l'impression"></section>
+
+<script src="/data.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  const CV = window.CV;
+  const NS = "http://www.w3.org/2000/svg";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const CANAUX = ["b", "p", "d"];
+
+  /* Couleurs des projecteurs, en composantes 0..1. Le mélange se fait comme sur scène : par addition (mode « écran »). */
+  const CH = { b: [1, .23, .23], p: [.17, 1, .44], d: [.29, .45, 1] };
+  const CHAUD = [1, .93, .80];
+  const COMBO = { b: "business", p: "projet", d: "produit", bp: "client", pd: "po", bd: "marketing", bpd: "builder" };
+  const LETTRES = { b: "R", p: "V", d: "B" };
+  const REPLI = { client: "projet", po: "produit", marketing: "business" };
+  const NUM = { business: 1, projet: 2, produit: 3, builder: 4, growth: 5 };
+  const SEUIL = .5;
+
+  function ecran(poids) {
+    const inv = [1, 1, 1];
+    for (const c of CANAUX) { const w = poids[c] || 0; for (let i = 0; i < 3; i++) inv[i] *= 1 - w * CH[c][i]; }
+    return inv.map((v) => 1 - v);
+  }
+  const hex = (rgb) => "#" + rgb.map((v) => Math.round(Math.max(0, Math.min(1, v)) * 255).toString(16).padStart(2, "0")).join("");
+  const eclaircir = (rgb, t) => rgb.map((v) => v + (1 - v) * t);
+  const borne = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  /* ---------- État : trois intensités de 0 à 1, et le plein feu ---------- */
+  const etat = { i: { b: 1, p: 1, d: 1 }, plein: false };
+  const actifs = () => CANAUX.filter((c) => etat.i[c] >= SEUIL);
+  function lentille() {
+    const k = actifs().join("");
+    if (!k) return null;
+    if (k === "bpd" && etat.plein) return "growth";
+    return COMBO[k];
+  }
+  function cibleDe(id) {
+    const L = CV.lenses[id];
+    const m = id === "growth" ? "bpd" : L.match;
+    return { i: { b: m.includes("b") ? 1 : 0, p: m.includes("p") ? 1 : 0, d: m.includes("d") ? 1 : 0 }, plein: id === "growth" };
+  }
+  const score = (rel) => (etat.plein && lentille() === "growth" ? rel.g : Math.max(0, ...CANAUX.map((c) => rel[c] * etat.i[c])));
+  const opacite = (s) => .4 + .6 * borne((s - 1) / 1.5, 0, 1);
+  function gelDe(rel, plein) {
+    const poids = {}; CANAUX.forEach((c) => (poids[c] = (rel[c] / 3) * etat.i[c]));
+    let rgb = ecran(poids);
+    if (plein) rgb = rgb.map((v, i) => v * .55 + CHAUD[i] * .45 * (rel.g / 3));
+    return rgb.map((v) => Math.max(v, .16));
+  }
+
+  /* ---------- Construction unique du DOM ---------- */
+  const P = CV.person;
+  $("#edition").textContent = P.edition;
+  $("#prenom").textContent = P.first;
+  $("#nomFamille").textContent = P.last;
+  $("#base").textContent = P.base + ". " + P.city + ".";
+  $("#courriel").textContent = P.email;
+  $("#ville").textContent = P.city;
+  $("#site").href = P.site; $("#site").textContent = P.siteLabel + " ↗";
+  $("#signature").textContent = P.name + " · portfolio, édition " + P.edition;
+  $("#nbProjets").textContent = CV.projects.length;
+  $("#qualites").innerHTML = CV.traits.map((t) => `<li>${esc(t)}</li>`).join("");
+
+  const MOIS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
+  function dateFr(s) { if (!s) return "aujourd'hui"; const [y, m] = s.split("-"); return m ? MOIS[+m - 1] + " " + y : y; }
+  function duree(from, to) {
+    const [y1, m1] = from.split("-").map(Number); const fin = to || "2026-11"; const [y2, m2] = fin.split("-").map(Number);
+    const mois = (y2 * 12 + m2) - (y1 * 12 + m1) + 1;
+    if (mois < 24) return mois + " mois";
+    let a = Math.floor(mois / 12); const r = mois - a * 12;
+    if (r >= 9) return (a + 1) + " ans";
+    return a + (r >= 4 ? " ans ½" : " ans");
+  }
+  const points = (k) => CANAUX.map((c) => `<i class="${c}${k.includes(c) ? " a" : ""}"></i>`).join("");
+
+  $("#listeExp").innerHTML = CV.experiences.map((e) => `
+    <article class="exp" id="e-${e.id}" data-id="${e.id}">
+      <div class="exp-date">${esc(dateFr(e.from))} → ${esc(dateFr(e.to))}<span class="duree">${esc(duree(e.from, e.to))}</span>
+        <div class="gel"><i></i><span class="gel-val"></span></div></div>
+      <div>
+        <h3>${esc(e.role)}</h3>
+        <p class="org">${esc(e.org)} · ${esc(e.place)}${e.contract ? " · " + esc(e.contract) : ""}</p>
+        <p class="phrase"></p>
+        <ul class="puces">${e.bullets.map((b) => `<li data-k="${b.k}"><span class="points" aria-hidden="true">${points(b.k)}</span><span>${esc(b.t)}</span></li>`).join("")}</ul>
+      </div>
+    </article>`).join("");
+
+  const projById = Object.fromEntries(CV.projects.map((p) => [p.id, p]));
+  $("#listeProj").innerHTML = CV.projects.map((p) => `
+    <article class="proj" id="p-${p.id}" data-id="${p.id}">
+      <div class="proj-tete"><span class="statut ${p.status}">${esc(p.statusLabel)}</span><span class="points" aria-hidden="true">${points(p.k)}</span></div>
+      <h3>${esc(p.name)}</h3>
+      <p class="accroche">${esc(p.tagline)}</p>
+      <p class="quoi">${esc(p.what)}</p>
+      <dl class="preuves">${p.proof.map(([v, l]) => `<div><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`).join("")}</dl>
+      <div class="pied"><span>${esc(p.family)}${p.into ? " · → " + esc(projById[p.into].name) : ""}${p.from ? " · né de " + p.from.map((f) => esc(projById[f].name)).join(" et ") : ""}</span>${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.urlLabel)} ↗</a>` : ""}</div>
+    </article>`).join("");
+
+  $("#listeForm").innerHTML = CV.education.map((f) => `
+    <li data-k="${f.k}" data-id="${f.id}"><span class="an">${esc(f.date.slice(0, 4))}</span><div><strong>${esc(f.title)}</strong><span>${esc(f.detail)}</span><span>${esc(f.org)}</span></div></li>`).join("");
+
+  const liens = CV.links || {};
+  /* Pied de page : seul le CV classique (style Orbite) est cité, pour qui préfère le papier sans détour. */
+  $("#autres").innerHTML = liens.orbite ? `<span>Préférez-vous un CV classique ?</span><a id="versOrbite" href="${esc(liens.orbite)}#builder" target="_blank" rel="noopener">Le même parcours, en CV classique ↗</a>` : "";
+
+  /* ---------- Dossier de candidature : un réglage préparé pour une offre (#dossier-…, fabriqué par dossier.js) ---------- */
+  let dossier = null;
+  function cibleDossier() {
+    if (dossier.plein) return { i: { b: 1, p: 1, d: 1 }, plein: true };
+    const r = dossier.reglage;
+    return r ? { i: { b: r.b / 100, p: r.p / 100, d: r.d / 100 }, plein: false } : cibleDe("builder");
+  }
+  function estSurDossier() {
+    if (!dossier) return false;
+    const c = cibleDossier();
+    return c.plein === etat.plein && CANAUX.every((k) => Math.abs(etat.i[k] - c.i[k]) < .015);
+  }
+  function majDossier() {
+    $("#pour").hidden = !dossier;
+    $("#mem-dossier").hidden = !dossier;
+    if (!dossier) return;
+    const nom = dossier.entreprise.toLocaleUpperCase("fr");
+    $("#pourEntreprise").textContent = dossier.entreprise;
+    $("#pourPoste").textContent = dossier.poste ? "Poste : " + dossier.poste : "";
+    $("#memDossierNom").textContent = nom;
+    $("#mem-dossier").title = "Mémoire 6 : le réglage préparé pour " + nom;
+    const vr = $("#pourReseau");
+    vr.hidden = !liens.reseau;
+    vr.href = liens.reseau + "#" + CV.ecrireDossier({ type: "dossier", brut: dossier.brut, besoins: dossier.besoins, plein: dossier.plein, reglage: dossier.reglage });
+  }
+
+  /* ---------- Le diagramme de lumière : un triangle de couleurs, comme un diagramme de chromaticité ---------- */
+  const SOM = { b: [80, 72], p: [520, 72], d: [300, 453] };
+  const G = [(SOM.b[0] + SOM.p[0] + SOM.d[0]) / 3, (SOM.b[1] + SOM.p[1] + SOM.d[1]) / 3];
+  const DET = (SOM.p[1] - SOM.d[1]) * (SOM.b[0] - SOM.d[0]) + (SOM.d[0] - SOM.p[0]) * (SOM.b[1] - SOM.d[1]);
+  function bary(x, y) {
+    const a = ((SOM.p[1] - SOM.d[1]) * (x - SOM.d[0]) + (SOM.d[0] - SOM.p[0]) * (y - SOM.d[1])) / DET;
+    const b = ((SOM.d[1] - SOM.b[1]) * (x - SOM.d[0]) + (SOM.b[0] - SOM.d[0]) * (y - SOM.d[1])) / DET;
+    return [a, b, 1 - a - b];
+  }
+  const versPoint = (w) => [w[0] * SOM.b[0] + w[1] * SOM.p[0] + w[2] * SOM.d[0], w[0] * SOM.b[1] + w[1] * SOM.p[1] + w[2] * SOM.d[1]];
+  function dedans([x, y], marge) {
+    if (Math.min(...bary(x, y)) >= marge) return [x, y];
+    let lo = 0, hi = 1;
+    for (let k = 0; k < 24; k++) { const m = (lo + hi) / 2; if (Math.min(...bary(G[0] + (x - G[0]) * m, G[1] + (y - G[1]) * m)) >= marge) lo = m; else hi = m; }
+    return [G[0] + (x - G[0]) * lo, G[1] + (y - G[1]) * lo];
+  }
+  /* Position d'un mélange : barycentre des trois métiers, écart au centre accentué ×2 pour séparer les profils voisins. */
+  function placer(b, p, d, marge) {
+    const s = b + p + d || 1;
+    const [x, y] = versPoint([b / s, p / s, d / s]);
+    return dedans([G[0] + (x - G[0]) * 2, G[1] + (y - G[1]) * 2], marge);
+  }
+
+  const toile = $("#toile"), ctx = toile.getContext("2d");
+  const TW = toile.width, TH = toile.height, PIX = ctx.createImageData(TW, TH);
+  const NORM = new Float32Array(TW * TH * 3), MASQUE = new Uint8Array(TW * TH);
+  for (let py = 0; py < TH; py++) for (let px = 0; px < TW; px++) {
+    const k = py * TW + px, w = bary(px * 2 + 1, py * 2 + 1);
+    if (Math.min(...w) < 0) continue;
+    const m = Math.max(...w); MASQUE[k] = 1;
+    NORM[k * 3] = w[0] / m; NORM[k * 3 + 1] = w[1] / m; NORM[k * 3 + 2] = w[2] / m;
+  }
+  let peintureDemandee = false;
+  function peindre() {
+    peintureDemandee = false;
+    const ib = etat.i.b, ip = etat.i.p, id = etat.i.d, D = PIX.data;
+    const plein = lentille() === "growth";
+    for (let k = 0; k < TW * TH; k++) {
+      if (!MASQUE[k]) continue;
+      const a = NORM[k * 3] * ib, b = NORM[k * 3 + 1] * ip, c = NORM[k * 3 + 2] * id;
+      for (let j = 0; j < 3; j++) {
+        let v = 1 - (1 - a * CH.b[j]) * (1 - b * CH.p[j]) * (1 - c * CH.d[j]);
+        if (plein) v = v * .8 + CHAUD[j] * .2;
+        D[k * 4 + j] = v * 255;
+      }
+      D[k * 4 + 3] = 255;
+    }
+    ctx.putImageData(PIX, 0, 0);
+  }
+  const demanderPeinture = () => { if (!peintureDemandee) { peintureDemandee = true; requestAnimationFrame(peindre); } };
+
+  const NOMS_EXP = { stratemind: "Stratemind", mtarget: "Mtarget", "1984": "1984 Agency", lanet: "Lanet", amex: "AMEX", arena: "Arena", lionbridge: "Lionbridge", bonnecaze: "Bonnecaze" };
+  const ELEMENTS = [
+    ...CV.experiences.map((e) => ({ type: "exp", id: e.id, ref: "e-" + e.id, nom: NOMS_EXP[e.id] || e.org, rel: e.rel, detail: e.role + " · " + e.org })),
+    ...CV.projects.map((p) => ({ type: "proj", id: p.id, ref: "p-" + p.id, nom: p.name, rel: p.rel, detail: p.tagline }))
+  ];
+  const REPERES = [
+    { lens: "business", x: SOM.b[0], y: SOM.b[1], tx: SOM.b[0], ty: SOM.b[1] - 18, a: "middle", nom: "Business" },
+    { lens: "projet", x: SOM.p[0], y: SOM.p[1], tx: SOM.p[0], ty: SOM.p[1] - 18, a: "middle", nom: "Projet" },
+    { lens: "produit", x: SOM.d[0], y: SOM.d[1], tx: SOM.d[0], ty: SOM.d[1] + 30, a: "middle", nom: "Produit" },
+    { lens: "client", x: 300, y: 72, tx: 300, ty: 56, a: "middle", nom: "Client" },
+    { lens: "po", x: 410, y: 262.5, tx: 430, ty: 286, a: "start", nom: "PO" },
+    { lens: "marketing", x: 190, y: 262.5, tx: 170, ty: 286, a: "end", nom: "Marketing" },
+    { lens: "builder", x: G[0], y: G[1], centre: true, nom: "Builder" }
+  ];
+  const ETOILE = "M0,-9.5 L2.5,-2.5 L9.5,0 L2.5,2.5 L0,9.5 L-2.5,2.5 L-9.5,0 L-2.5,-2.5 Z";
+
+  function disposer(compact) {
+    const minD = compact ? 30 : 25;
+    const pts = ELEMENTS.map((el) => ({ el, p: placer(el.rel.b, el.rel.p, el.rel.d, .05) }));
+    /* Répulsion : les profils identiques (par exemple deux jeux au même mélange) s'écartent sans quitter le triangle. */
+    for (let it = 0; it < 80; it++) {
+      for (let a = 0; a < pts.length; a++) for (let b = a + 1; b < pts.length; b++) {
+        let dx = pts[b].p[0] - pts[a].p[0], dy = pts[b].p[1] - pts[a].p[1], d = Math.hypot(dx, dy);
+        if (d >= minD) continue;
+        if (d < .01) { const ang = (a * 2.4 + b * 1.3); dx = Math.cos(ang); dy = Math.sin(ang); d = 1; }
+        const f = (minD - d) / 2 / d;
+        pts[a].p = [pts[a].p[0] - dx * f, pts[a].p[1] - dy * f];
+        pts[b].p = [pts[b].p[0] + dx * f, pts[b].p[1] + dy * f];
+      }
+      pts.forEach((o) => (o.p = dedans(o.p, .035)));
+    }
+    /* Étiquettes : placement glouton, la première position libre parmi huit, sinon la moins encombrée. */
+    const boites = [];
+    pts.forEach(({ p }) => boites.push([p[0] - 10, p[1] - 10, 20, 20]));
+    REPERES.forEach((r) => { if (r.centre) return; const w = r.nom.length * 12.5 * .78 + 10; boites.push([r.a === "start" ? r.tx : r.a === "end" ? r.tx - w : r.tx - w / 2, r.ty - 13, w, 17]); });
+    const recouvre = (A, B) => Math.max(0, Math.min(A[0] + A[2], B[0] + B[2]) - Math.max(A[0], B[0])) * Math.max(0, Math.min(A[1] + A[3], B[1] + B[3]) - Math.max(A[1], B[1]));
+    const ordre = pts.slice().sort((a, b) => (a.el.type === b.el.type ? 0 : a.el.type === "exp" ? -1 : 1));
+    ordre.forEach((o) => {
+      if (compact && o.el.type === "proj") { o.lab = null; return; }
+      const fs = o.el.type === "exp" ? (compact ? 23 : 16) : 13;
+      const w = o.el.nom.length * fs * (o.el.type === "exp" ? .5 : .56) + 4, h = fs * 1.05;
+      const [x, y] = o.p, e = 12;
+      const cands = [
+        [x + e, y + fs * .35, "start"], [x - e, y + fs * .35, "end"], [x, y - e - 2, "middle"], [x, y + e + fs * .8, "middle"],
+        [x + e - 4, y - e, "start"], [x + e - 4, y + e + fs * .6, "start"], [x - e + 4, y - e, "end"], [x - e + 4, y + e + fs * .6, "end"]
+      ];
+      let mieux = null, coutMin = Infinity;
+      for (const [tx, ty, a] of cands) {
+        const bx = a === "start" ? tx : a === "end" ? tx - w : tx - w / 2, B = [bx, ty - h * .8, w, h];
+        let cout = boites.reduce((s, A) => s + recouvre(A, B), 0);
+        if (B[0] < 0 || B[1] < 0 || B[0] + B[2] > 600 || B[1] + B[3] > 540) cout += 5000;
+        if (cout < coutMin) { coutMin = cout; mieux = { tx, ty, a, B }; if (cout === 0) break; }
+      }
+      boites.push(mieux.B);
+      o.lab = mieux;
+    });
+    return pts;
+  }
+
+  const tri = $("#tri");
+  let disposition = [];
+  function dessinerTriangle() {
+    const compact = matchMedia("(max-width: 600px)").matches;
+    disposition = disposer(compact);
+    let s = `<polygon class="tri-bord" points="${SOM.b.join(",")} ${SOM.p.join(",")} ${SOM.d.join(",")}"/>`;
+    s += REPERES.map((r) => r.centre
+      ? `<g class="repere" data-lens="${r.lens}" tabindex="0" role="button" aria-label="Rappeler la mémoire ${esc(CV.lenses[r.lens].title)}"><circle class="anneau" cx="${r.x}" cy="${r.y}" r="17"/><title>Centre : ${esc(CV.lenses[r.lens].title)}</title></g>`
+      : `<g class="repere" data-lens="${r.lens}" tabindex="0" role="button" aria-label="Rappeler la mémoire ${esc(CV.lenses[r.lens].title)}"><circle cx="${r.x}" cy="${r.y}" r="5"/><text x="${r.tx}" y="${r.ty}" text-anchor="${r.a}">${esc(r.nom)}</text></g>`).join("");
+    s += disposition.map(({ el, p, lab }) => {
+      const forme = el.type === "exp" ? `<circle class="forme" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="7"/>` : `<path class="forme" d="${ETOILE}" transform="translate(${p[0].toFixed(1)} ${p[1].toFixed(1)})"/>`;
+      const txt = lab ? `<text x="${lab.tx.toFixed(1)}" y="${lab.ty.toFixed(1)}" text-anchor="${lab.a}">${esc(el.nom)}</text>` : "";
+      return `<g class="pt ${el.type}" data-ref="${el.ref}" data-i="${ELEMENTS.indexOf(el)}" tabindex="0" role="link" aria-label="${esc(el.nom + ", " + el.detail)}">${forme}${txt}</g>`;
+    }).join("");
+    s += `<g class="curseur" id="curseur" aria-hidden="true"><circle class="halo" r="12"/><circle r="12"/></g>`;
+    tri.innerHTML = s;
+  }
+  dessinerTriangle();
+  matchMedia("(max-width: 600px)").addEventListener("change", () => { dessinerTriangle(); rendre(true); });
+
+  const SURVOL_DEFAUT = "Survolez ou touchez un point pour lire son mélange.";
+  function decrire(el) {
+    const r = el.rel;
+    $("#survol").innerHTML = `<strong>${el.type === "exp" ? "●" : "✦"} ${esc(el.nom)}</strong> · ${esc(el.detail)}<br>Business ${r.b} · Projet ${r.p} · Produit ${r.d} <span style="color:var(--texte-3)">(sur 3)</span>`;
+  }
+  $("#survol").textContent = SURVOL_DEFAUT;
+
+  /* ---------- Rendu : la partie continue suit les faders à chaque image ---------- */
+  const root = document.documentElement.style;
+  let idAffiche;
+  function rendre(force) {
+    const id = lentille();
+    const on = actifs();
+    const plein = id === "growth";
+    CANAUX.forEach((c) => {
+      root.setProperty("--i" + c, etat.i[c].toFixed(3));
+      const v = Math.round(etat.i[c] * 100), f = $("#fader-" + c);
+      if (+f.value !== v) f.value = v;
+      f.style.setProperty("--v", v + "%");
+      $("#val-" + c).textContent = v;
+    });
+    root.setProperty("--plein", plein ? "1" : "0");
+    const m = Math.max(etat.i.b, etat.i.p, etat.i.d);
+    const lumiere = plein ? CHAUD : (m < .02 ? [.3, .32, .38] : ecran({ b: etat.i.b / m, p: etat.i.p / m, d: etat.i.d / m }));
+    const lum = .2126 * lumiere[0] + .7152 * lumiere[1] + .0722 * lumiere[2];
+    root.setProperty("--lumiere", hex(lumiere));
+    root.setProperty("--lumiere-texte", hex(eclaircir(lumiere, lum < .45 ? .38 : .12)));
+
+    $$(".disque .nomc").forEach((c) => c.classList.toggle("on", etat.i[c.dataset.c] >= SEUIL));
+    $$(".disque .inter").forEach((t) => { const k = t.dataset.pair; t.classList.toggle("on", k.split("").every((c) => on.includes(c)) && (k.length === 3 || on.length === 2)); });
+    $(".disque .inter[data-pair=\"bpd\"]").textContent = plein ? "Growth" : "Builder";
+    const surDossier = estSurDossier();
+    $$(".mem[data-lens]").forEach((b) => b.setAttribute("aria-pressed", String(!surDossier && b.dataset.lens === id)));
+    $("#mem-dossier").setAttribute("aria-pressed", String(surDossier));
+    $$("#tri .repere").forEach((g) => g.classList.toggle("on", g.dataset.lens === id || (plein && g.dataset.lens === "builder")));
+    $("#lectRvb").textContent = CANAUX.map((c) => LETTRES[c] + " " + Math.round(etat.i[c] * 100)).join(" · ") + (plein ? " · plein feu + poursuite" : "");
+
+    CV.experiences.forEach((e) => {
+      const el = $(`#e-${CSS.escape(e.id)}`);
+      const s = score(e.rel), gel = gelDe(e.rel, plein);
+      el.style.setProperty("--gel", hex(gel));
+      el.style.opacity = opacite(s).toFixed(3);
+      el.classList.toggle("eclaire", s >= 2);
+      $(".gel-val", el).textContent = "gélatine R " + Math.round(gel[0] * 255) + " · V " + Math.round(gel[1] * 255) + " · B " + Math.round(gel[2] * 255);
+      $$(".puces li", el).forEach((li) => {
+        const k = li.dataset.k;
+        const poids = Math.max(0, ...k.split("").filter((c) => CANAUX.includes(c)).map((c) => etat.i[c]));
+        const suivi = plein && k.includes("g");
+        li.classList.toggle("allumee", poids >= SEUIL && !plein);
+        li.classList.toggle("poursuivie", suivi);
+        li.style.opacity = (plein ? (suivi ? 1 : .38) : .38 + .62 * poids).toFixed(3);
+      });
+    });
+    CV.projects.forEach((p) => {
+      const el = $(`#p-${p.id}`), s = score(p.rel);
+      el.style.setProperty("--gel", hex(eclaircir(gelDe(p.rel, plein), .18)));
+      el.style.opacity = opacite(s).toFixed(3);
+      el.classList.toggle("eclaire", s >= 2);
+    });
+    $$("#listeForm li").forEach((li) => { const f = CV.education.find((x) => x.id === li.dataset.id); li.style.opacity = opacite(score(f.rel)).toFixed(3); });
+
+    $$("#tri .pt").forEach((g) => { g.style.opacity = opacite(score(ELEMENTS[+g.dataset.i].rel)).toFixed(3); });
+    const somme = etat.i.b + etat.i.p + etat.i.d, cur = $("#curseur");
+    if (somme < .02) cur.setAttribute("visibility", "hidden");
+    else { const [x, y] = placer(etat.i.b, etat.i.p, etat.i.d, .05); cur.setAttribute("visibility", "visible"); cur.setAttribute("transform", `translate(${x.toFixed(1)} ${y.toFixed(1)})`); }
+    demanderPeinture();
+
+    if (force || id !== idAffiche) { idAffiche = id; rendreTextes(id); }
+  }
+
+  function rendreTextes(id) {
+    const L = id ? CV.lenses[id] : null;
+    if (L) {
+      $("#role").innerHTML = esc(L.title) + (L.bonus ? " <small>mélange bonus</small>" : "");
+      $("#pitch").textContent = L.pitch;
+      $("#lectMem").textContent = L.bonus ? "Mélange" : "Mém. " + NUM[id];
+      $("#lectRole").textContent = L.title;
+      $("#profilRole").textContent = L.title;
+      $("#resume").textContent = L.summary;
+      $("#cherche").innerHTML = "<strong>Ce que je cherche.</strong> " + esc(L.seek);
+      $("#chiffres").innerHTML = L.kpis.map(([v, l]) => `<div class="chiffre"><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`).join("");
+      $("#compTitre").textContent = "Pour un poste de " + L.title;
+      $("#listeComp").innerHTML = L.skills.map((s) => `<li>${esc(s)}</li>`).join("");
+    } else {
+      $("#role").textContent = "Noir salle";
+      $("#pitch").textContent = "Montez un fader pour relire le parcours.";
+      $("#lectMem").textContent = "Noir"; $("#lectRole").textContent = "aucun projecteur";
+      $("#profilRole").textContent = "éteinte";
+    }
+    const cle = id ? (REPLI[id] || id) : "builder";
+    CV.experiences.forEach((e) => { $(`#e-${CSS.escape(e.id)} .phrase`).textContent = e.lines[cle] || e.lines.builder; });
+  }
+
+  /* Ce qui ne doit pas bouger pendant un geste : l'ordre des projets et l'adresse. */
+  function finaliser(sansAdresse) {
+    const id = lentille(), L = id ? CV.lenses[id] : null;
+    const ordre = (L ? L.projects : []).slice();
+    const reste = CV.projects.filter((p) => !ordre.includes(p.id)).sort((a, b) => score(b.rel) - score(a.rel));
+    const liste = $("#listeProj");
+    [...ordre.map((i) => projById[i]), ...reste].forEach((p) => liste.appendChild($(`#p-${p.id}`)));
+    rendreRegie();
+    const vo = $("#versOrbite");
+    if (vo) vo.href = liens.orbite + "#" + (id === "growth" ? "growth" : "builder");
+    /* Un dossier garde son adresse : la mémoire 6 y ramène, et le lien reste celui qui a été envoyé. */
+    if (!sansAdresse && !dossier) { try { history.replaceState(null, "", id ? "#" + id : location.pathname + location.search); } catch (e) { /* adresse figée */ } }
+  }
+
+  /* ---------- Les faders glissent d'une mémoire à l'autre (temps de montée 1,1 s) ---------- */
+  let animG = 0;
+  function glisser(cible, dureeMs, fin) {
+    cancelAnimationFrame(animG);
+    etat.plein = cible.plein;
+    if (reduit || dureeMs <= 0) { Object.assign(etat.i, cible.i); rendre(); finaliser(); if (fin) fin(); return; }
+    const de = { ...etat.i }, t0 = performance.now();
+    const pas = (t) => {
+      const k = Math.min(1, (t - t0) / dureeMs), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      CANAUX.forEach((c) => (etat.i[c] = de[c] + (cible.i[c] - de[c]) * e));
+      rendre();
+      if (k < 1) animG = requestAnimationFrame(pas); else { finaliser(); if (fin) fin(); }
+    };
+    animG = requestAnimationFrame(pas);
+  }
+  const rappeler = (id) => { arreterConduite(false); glisser(cibleDe(id), 1100); };
+
+  /* ---------- La conduite : les mémoires s'enchaînent seules ---------- */
+  const CONDUITE = ["business", "projet", "produit", "builder", "growth", "builder"];
+  const MONTEE = 1100, MAINTIEN = 4800;
+  let conduite = null;
+  const go = $("#conduite");
+  function etiquetteGo(texte, court) { go.innerHTML = `${texte}<span class="long">${court}</span>`; }
+  etiquetteGo("▶ ", "Lancer la conduite");
+  function lancerConduite() {
+    conduite = { n: 0, t0: performance.now(), raf: 0, minuterie: 0 };
+    go.setAttribute("aria-pressed", "true");
+    const barre = () => {
+      if (!conduite) return;
+      const k = Math.min(1, (performance.now() - conduite.t0) / (CONDUITE.length * (MONTEE + MAINTIEN)));
+      $("#avance").style.width = (k * 100).toFixed(2) + "%";
+      conduite.raf = requestAnimationFrame(barre);
+    };
+    barre();
+    pasConduite();
+  }
+  function pasConduite() {
+    const c = conduite; if (!c) return;
+    etiquetteGo("■ " + (c.n + 1) + "/" + CONDUITE.length + " ", "Arrêter la conduite");
+    glisser(cibleDe(CONDUITE[c.n]), MONTEE);
+    c.minuterie = setTimeout(() => { if (conduite !== c) return; c.n++; if (c.n < CONDUITE.length) pasConduite(); else arreterConduite(true); }, MONTEE + MAINTIEN);
+  }
+  function arreterConduite(fini) {
+    if (!conduite) return;
+    clearTimeout(conduite.minuterie); cancelAnimationFrame(conduite.raf);
+    conduite = null;
+    go.setAttribute("aria-pressed", "false");
+    etiquetteGo(fini ? "↺ " : "▶ ", fini ? "Relancer la conduite" : "Lancer la conduite");
+    $("#avance").style.width = "0";
+  }
+  go.addEventListener("click", () => (conduite ? arreterConduite(false) : lancerConduite()));
+
+  /* ---------- Fiche de régie : la feuille de conduite imprimée selon le réglage (A4, une page) ---------- */
+  const GEL_PAPIER = { b: "#d63a2f", p: "#1c9a52", d: "#2f5ee0" };
+  const NOMS_CH = { b: "Business", p: "Projet", d: "Produit" };
+  const pucesAllumees = (e, plein) => e.bullets.filter((b) => (plein ? b.k.includes("g")
+    : Math.max(0, ...b.k.split("").filter((c) => CANAUX.includes(c)).map((c) => etat.i[c])) >= SEUIL));
+  const BAS_MAX_MM = 283;  /* le pied commence vers 285 mm */
+  /* Jusqu'à 3 puces par poste allumé ; si la feuille déborde, on en retire une au poste qui en a le plus,
+     en commençant par le plus ancien, jusqu'à ce que tout tienne. Les postes récents gardent leur détail. */
+  function basDeFeuille(r) {
+    const avant = r.getAttribute("style");
+    r.style.cssText = "display:block;position:absolute;left:-10000px;top:0;visibility:hidden";
+    const f = r.getBoundingClientRect(), mm = f.height / 296.6;
+    const bas = mm ? (r.querySelector(".r-bas").getBoundingClientRect().bottom - f.top) / mm : 0;
+    if (avant === null) r.removeAttribute("style"); else r.setAttribute("style", avant);
+    return bas;
+  }
+  function rendreRegie() {
+    const r = $("#regie");
+    const plein = lentille() === "growth";
+    const dispo = CV.experiences.map((e) => (score(e.rel) >= 2 ? Math.min(3, pucesAllumees(e, plein).length) : 0));
+    const caps = dispo.slice();
+    for (let essai = 0; essai < 30; essai++) {
+      r.innerHTML = feuilleRegie(caps);
+      if (basDeFeuille(r) <= BAS_MAX_MM) break;
+      const plus = Math.max(...caps);
+      if (!plus) break;
+      caps[caps.lastIndexOf(plus)]--;
+    }
+    const el = $("#regieQr");
+    try {
+      const qr = window.qrcode(0, "M"); qr.addData(el.dataset.url); qr.make();
+      el.innerHTML = qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true });
+      el.setAttribute("role", "img"); el.setAttribute("aria-label", "Code QR vers le même réglage en ligne");
+    } catch (err) { el.innerHTML = ""; }
+  }
+  function feuilleRegie(caps) {
+    const id = lentille(), L = CV.lenses[id || "builder"], plein = id === "growth";
+    const cle = id ? (REPLI[id] || id) : "builder";
+    const niveau = (rel) => Math.round(Math.min(1, score(rel) / 3) * 100);
+    const v = (c) => Math.round(etat.i[c] * 100);
+    const memoire = estSurDossier() ? "Mémoire 6 · " + dossier.entreprise.toLocaleUpperCase("fr")
+      : id && NUM[id] ? `Mémoire ${NUM[id]} · ${L.short}` : id ? `Mélange · ${L.short}` : "Noir salle";
+    const adresse = dossier
+      ? CV.ecrireDossier({ type: "dossier", brut: dossier.brut, besoins: dossier.besoins, plein: dossier.plein, reglage: dossier.reglage })
+      : (id || "builder");
+    const enLigne = (liens.lumiere || "") + "#" + adresse;
+    const pour = dossier
+      ? `<p class="r-etiq">Préparée pour</p><p class="r-ent">${esc(dossier.entreprise)}</p>${dossier.poste ? `<p class="r-vise">Poste : ${esc(dossier.poste)}</p>` : ""}`
+      : `<p class="r-etiq">Réglage choisi au pupitre</p><p class="r-ent">${esc(L.title)}</p>`;
+    const n = CV.experiences.length;
+    const lignes = CV.experiences.map((e, k) => {
+      const niv = niveau(e.rel), allume = score(e.rel) >= 2;
+      const puces = allume ? pucesAllumees(e, plein).slice(0, caps[k]) : [];
+      return `<div class="r-ligne${allume ? "" : " ombre"}">
+        <span class="r-n">${String(n - k).padStart(2, "0")}</span>
+        <div class="r-poste"><b>${esc(e.role)}</b> · ${esc(e.org)}<span class="r-lieu"> · ${esc(e.place)}</span></div>
+        <span class="r-per">${e.from.slice(0, 4)} → ${e.to ? e.to.slice(0, 4) : "auj."} · ${esc(duree(e.from, e.to))}</span>
+        <span class="r-niv"><span class="r-piste"><i style="width:${niv}%"></i></span><b>${niv}</b></span>
+        ${allume ? `<div class="r-note"><p>${esc(e.lines[cle] || e.lines.builder)}</p>${puces.length ? `<ul>${puces.map((b) => `<li>${esc(b.t)}</li>`).join("")}</ul>` : ""}</div>` : ""}
+      </div>`;
+    }).join("");
+    const ordre = (id ? L.projects : []).slice();
+    const projets = [...ordre.map((i) => projById[i]), ...CV.projects.filter((p) => !ordre.includes(p.id)).sort((a, b) => score(b.rel) - score(a.rel))]
+      .filter((p) => score(p.rel) >= 2).slice(0, 6);
+    return `
+      <header class="r-tete">
+        <div>
+          <p class="r-etiq">Fiche de régie · conduite lumière · ${esc(P.edition)}</p>
+          <h1 class="r-nom"><i>${esc(P.first)}</i> ${esc(P.last)}</h1>
+          <p class="r-role">${esc(L.title)}</p>
+          <p class="r-coord">${esc(P.city)} · ${esc(P.email)} · ${esc(P.siteLabel)}</p>
+        </div>
+        <div class="r-pour">
+          <div class="r-pour-txt">${pour}<p class="r-qr-note">Le même réglage en ligne, avec les faders.</p></div>
+          <div class="r-qr" id="regieQr" data-url="${esc(enLigne)}"></div>
+        </div>
+      </header>
+      <section class="r-projo" aria-label="Projecteurs">
+        ${CANAUX.map((c, i) => `<div class="r-ch" style="--g:${GEL_PAPIER[c]}"><span>CH${i + 1} · ${NOMS_CH[c]}</span><span class="r-barre"><i style="width:${v(c)}%"></i></span><b>${v(c)}</b></div>`).join("")}
+        <div class="r-mem">${esc(memoire)}${plein ? " · plein feu" : ""}</div>
+      </section>
+      <section class="r-profil"><p class="r-pitch">${esc(L.pitch)}</p><p class="r-resume">${esc(L.summary)}</p></section>
+      <section aria-label="Conduite">
+        <div class="r-titre"><h2>Conduite</h2><span>Ce qui sert le poste s'allume ; le reste passe dans l'ombre.</span></div>
+        <div class="r-ligne r-entete"><span>N°</span><span>Poste</span><span>Période</span><span>Niveau</span></div>
+        ${lignes}
+      </section>
+      <section class="r-bas">
+        <div><h2>Projets allumés</h2><ul>${projets.map((p) => `<li><b>${esc(p.name)}</b> · ${esc(p.tagline)}</li>`).join("")}</ul></div>
+        <div><h2>Formations</h2><ul class="r-form">${CV.education.map((f) => `<li><span>${esc(f.date.slice(0, 4))}</span><b>${esc(f.title)}</b> · ${esc(f.detail)}</li>`).join("")}</ul></div>
+        <div><h2>Ce que je cherche</h2><p class="r-cherche">${esc(L.seek)}</p>
+          <h2>Repères</h2><ul class="r-kpi">${L.kpis.map(([v, l]) => `<li><b>${esc(v)}</b><span>${esc(l)}</span></li>`).join("")}</ul></div>
+      </section>
+      <footer class="r-pied"><span>${esc(P.name)} · fiche de régie · ${CANAUX.map((c) => LETTRES[c] + " " + v(c)).join(" · ")}</span><span>1/1</span></footer>`;
+  }
+  window.addEventListener("beforeprint", rendreRegie);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(rendreRegie);
+  document.addEventListener("click", (e) => { if (e.target.closest("[data-imprimer]")) { rendreRegie(); window.print(); } });
+
+  /* ---------- Commandes ---------- */
+  CANAUX.forEach((c) => {
+    const f = $("#fader-" + c);
+    f.addEventListener("input", () => { arreterConduite(false); cancelAnimationFrame(animG); etat.plein = false; etat.i[c] = f.value / 100; rendre(); });
+    f.addEventListener("change", () => finaliser());
+  });
+  function basculer(c) {
+    arreterConduite(false);
+    glisser({ i: { ...etat.i, [c]: etat.i[c] >= SEUIL ? 0 : 1 }, plein: false }, 600);
+  }
+  $$(".disque .cercle, .disque .nomc").forEach((c) => c.addEventListener("click", () => basculer(c.dataset.c)));
+  $$(".mem[data-lens]").forEach((b) => b.addEventListener("click", () => rappeler(b.dataset.lens)));
+  $("#mem-dossier").addEventListener("click", () => { if (!dossier) return; arreterConduite(false); glisser(cibleDossier(), 1100); });
+
+  function allerA(ref) {
+    const el = document.getElementById(ref); if (!el) return;
+    el.scrollIntoView({ behavior: reduit ? "auto" : "smooth", block: "start" });
+    el.classList.remove("signal"); void el.offsetWidth; el.classList.add("signal");
+  }
+  tri.addEventListener("click", (e) => {
+    const r = e.target.closest(".repere"); if (r) { rappeler(r.dataset.lens); return; }
+    const p = e.target.closest(".pt"); if (p) allerA(p.dataset.ref);
+  });
+  tri.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const r = e.target.closest(".repere"), p = e.target.closest(".pt");
+    if (r || p) { e.preventDefault(); if (r) rappeler(r.dataset.lens); else allerA(p.dataset.ref); }
+  });
+  const survoler = (e) => { const p = e.target.closest(".pt"); $$("#tri .pt.vu").forEach((x) => x.classList.remove("vu")); if (p) { p.classList.add("vu"); decrire(ELEMENTS[+p.dataset.i]); } };
+  tri.addEventListener("pointerover", survoler);
+  tri.addEventListener("focusin", survoler);
+
+  $("#copier").addEventListener("click", async (ev) => {
+    const b = ev.currentTarget;
+    try { await navigator.clipboard.writeText(P.email); b.textContent = "Adresse copiée"; }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($("#courriel")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Sélectionnée : Ctrl+C"; }
+    setTimeout(() => (b.textContent = "Copier l'adresse"), 2400);
+  });
+
+  /* ---------- Projecteurs à la souris : les faisceaux suivent le pointeur, sans à-coup ---------- */
+  const scene = $("#scene");
+  if (!reduit && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let cx = 50, vise = 50, rafCx = 0;
+    const suivre = () => {
+      cx += (vise - cx) * .07;
+      scene.style.setProperty("--cx", cx.toFixed(2) + "%");
+      rafCx = Math.abs(vise - cx) > .04 ? requestAnimationFrame(suivre) : 0;
+    };
+    scene.addEventListener("pointermove", (e) => {
+      if (e.pointerType !== "mouse") return;
+      const r = scene.getBoundingClientRect();
+      vise = borne(((e.clientX - r.left) / r.width) * 100, 28, 74);
+      if (!rafCx) rafCx = requestAnimationFrame(suivre);
+    });
+    scene.addEventListener("pointerleave", () => { vise = 50; if (!rafCx) rafCx = requestAnimationFrame(suivre); });
+  }
+
+  /* ---------- Adresse et lever de rideau ---------- */
+  function lireHash() {
+    const h = (location.hash || "").slice(1);
+    const d = CV.lireDossier(h);
+    if (d && d.type === "dossier") {
+      dossier = d; majDossier();
+      const c = cibleDossier(); etat.plein = c.plein; Object.assign(etat.i, c.i);
+      return true;
+    }
+    if (!CV.lenses[h]) return false;
+    const c = cibleDe(h); etat.plein = c.plein; Object.assign(etat.i, c.i);
+    return true;
+  }
+  window.addEventListener("hashchange", () => { if (lireHash()) { arreterConduite(false); rendre(); finaliser(true); } });
+
+  const aHash = lireHash();
+  rendre(true);
+  finaliser(true);
+  /* Le contenu se lit tout de suite ; seuls les faisceaux s'allument un à un. */
+  if (!aHash && !reduit) {
+    const attente = CANAUX.flatMap((k) => [$(`.faisceaux .${k}`), $(`.disque .cercle[data-c="${k}"]`)]);
+    scene.classList.add("lever");
+    attente.forEach((x) => x.classList.add("attente"));
+    void scene.offsetWidth;
+    CANAUX.forEach((k, i) => setTimeout(() => {
+      $(`.faisceaux .${k}`).classList.remove("attente");
+      $(`.disque .cercle[data-c="${k}"]`).classList.remove("attente");
+    }, 250 + i * 420));
+    setTimeout(() => scene.classList.remove("lever"), 250 + 2 * 420 + 1300);
+  }
+})();
+</script>
+</body>
+</html>

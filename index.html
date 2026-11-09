@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="canonical" href="https://quentin-coutarel.fr/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:url" content="https://quentin-coutarel.fr/">
+<meta property="og:title" content="Réseau Quentin Coutarel">
+<meta property="og:description" content="Le parcours de Quentin Coutarel dessiné comme un plan de transport : une ligne par métier, des correspondances, et le tramway des projets Stratemind.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Réseau Quentin Coutarel</title>
+<meta name="description" content="Le parcours de Quentin Coutarel dessiné comme un plan de transport : une ligne par métier, des correspondances, et le tramway des projets Stratemind.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Overpass:ital,wght@0,400;0,600;0,700;1,400&family=DotGothic16&display=swap">
+<style>
+/* Mise en page : le cartouche du plan, le choix de la ligne, l'écran de quai, le plan schématique,
+   puis le plan de ligne (à gauche) et la fiche de la station (à droite), et le tramway des projets.
+   Le thème sombre est le plan du service de nuit. */
+:root {
+  --fond: #f3f4f1;
+  --plan: #ffffff;
+  --encre: #15181e;
+  --encre-2: #4a505c;
+  --encre-3: #7f8592;
+  --filet: #d9dce2;
+  --zone-a: #eef1f5;
+  --zone-b: #f8f9fb;
+  --l1: #dc3127;
+  --l2: #00905a;
+  --l3: #2858d4;
+  --le: #b77f00;
+  --s1: #0a8585;
+  --s2: #cf5a0c;
+  --s3: #7448cc;
+  --s4: #bd3474;
+  --plaque: #1d2a4f;
+  --plaque-texte: #ffffff;
+  --led: #ffb21a;
+  --led-doux: #8a5d0b;
+  --led-fond: #100d08;
+  --f-titre: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --f-texte: "Overpass", "Segoe UI", system-ui, sans-serif;
+  --f-led: "DotGothic16", "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fond: #090d17; --plan: #0f1524; --encre: #e9ecf3; --encre-2: #aab1c2; --encre-3: #747c90; --filet: #252d42;
+    --zone-a: #141b2e; --zone-b: #10172a;
+    --l1: #ff5b4f; --l2: #2fc98b; --l3: #6e95ff; --le: #f2b53a;
+    --s1: #33c2c2; --s2: #ff8a3d; --s3: #a888ff; --s4: #ff6fae;
+    --plaque: #e9ecf3; --plaque-texte: #0f1524;
+    --led: #ffb21a; --led-doux: #7a520a; --led-fond: #050403;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fond: #090d17; --plan: #0f1524; --encre: #e9ecf3; --encre-2: #aab1c2; --encre-3: #747c90; --filet: #252d42;
+  --zone-a: #141b2e; --zone-b: #10172a;
+  --l1: #ff5b4f; --l2: #2fc98b; --l3: #6e95ff; --le: #f2b53a;
+  --s1: #33c2c2; --s2: #ff8a3d; --s3: #a888ff; --s4: #ff6fae;
+  --plaque: #e9ecf3; --plaque-texte: #0f1524;
+  --led: #ffb21a; --led-doux: #7a520a; --led-fond: #050403;
+  color-scheme: dark;
+}
+.jour { display: inline; } .nuit { display: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .jour { display: none; } :root:not([data-theme="light"]) .nuit { display: inline; } }
+:root[data-theme="dark"] .jour { display: none; } :root[data-theme="dark"] .nuit { display: inline; }
+
+* { box-sizing: border-box; }
+body { background: var(--fond); color: var(--encre); font-family: var(--f-texte); font-size: 16.5px; line-height: 1.55; }
+a { color: inherit; text-underline-offset: 3px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--l3); outline-offset: 2px; border-radius: 4px; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.etiq { font-family: var(--f-titre); font-stretch: 100%; font-weight: 700; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--encre-3); margin: 0; }
+
+/* Roundels : métro (rond), express (carré), tram (rectangle) */
+.rond { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; color: #fff; font-family: var(--f-titre); font-weight: 800; font-size: 14px; flex: none; line-height: 1; }
+.rond.b { background: var(--l1); } .rond.p { background: var(--l2); } .rond.d { background: var(--l3); } .rond.e { background: var(--le); border-radius: 6px; }
+.rond.petit { width: 20px; height: 20px; font-size: 11px; }
+.tram { display: inline-grid; place-items: center; min-width: 30px; height: 20px; padding: 0 5px; border-radius: 5px; color: #fff; background: var(--c); font-family: var(--f-titre); font-weight: 800; font-size: 11.5px; flex: none; }
+
+/* Cartouche */
+.cartouche { padding-block: clamp(28px, 5vw, 56px) 18px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 18px 24px; align-items: center; }
+.logo { width: 64px; height: 64px; border-radius: 50%; border: 4px solid var(--encre); display: grid; place-items: center; font-family: var(--f-titre); font-weight: 900; font-stretch: 125%; font-size: 20px; letter-spacing: -.02em; }
+h1 { font-family: var(--f-titre); font-weight: 900; font-stretch: 118%; font-size: clamp(28px, 4.8vw, 58px); line-height: .95; letter-spacing: -.02em; margin: 0; text-wrap: balance; }
+.sous-titre { font-family: var(--f-titre); font-stretch: 90%; margin: 8px 0 0; color: var(--encre-2); font-size: 15px; }
+.legende { display: grid; gap: 6px; font-size: 13px; color: var(--encre-2); justify-items: start; }
+.legende span { display: inline-flex; align-items: center; gap: 8px; }
+.sym { display: inline-block; flex: none; }
+.sym.st { width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid var(--encre); background: var(--plan); }
+.sym.co { width: 13px; height: 22px; border-radius: 7px; border: 2.5px solid var(--encre); background: var(--plan); }
+.sym.fo { width: 13px; height: 13px; border-radius: 50%; border: 2.5px solid var(--encre); background: radial-gradient(circle, var(--encre) 0 2.5px, var(--plan) 3px); }
+
+/* Choix de ligne */
+.choix { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 10px 0 0; list-style: none; }
+.choix button { display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 999px; border: 2px solid var(--filet); background: var(--plan); cursor: pointer; font-family: var(--f-titre); font-stretch: 85%; font-weight: 700; font-size: 15px; }
+.choix button .groupe-rond { display: inline-flex; gap: 2px; }
+.choix button .sous { font-weight: 400; color: var(--encre-3); }
+.choix button[aria-pressed="true"] { border-color: var(--encre); box-shadow: inset 0 0 0 1px var(--encre); }
+
+/* Calcul d'itinéraire : les besoins portent une lettre carrée à l'encre, les lignes gardent leurs ronds de couleur */
+.borne { margin-top: 14px; }
+.borne-cadre { display: grid; gap: 10px; padding: 12px 14px 14px; background: var(--plan); border: 1px solid var(--filet); border-radius: 12px; }
+.borne-tete { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; }
+.borne-aide { margin: 0; font-size: 13.5px; color: var(--encre-3); flex: 1 1 260px; min-width: 0; }
+.effacer { border: 0; background: none; padding: 2px 0; cursor: pointer; font-family: var(--f-titre); font-stretch: 90%; font-weight: 700; font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px; color: var(--encre-2); }
+.besoins { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.besoins button { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px 6px 7px; border-radius: 8px; border: 2px dashed var(--filet); background: var(--fond); cursor: pointer; font-family: var(--f-titre); font-stretch: 85%; font-weight: 700; font-size: 15px; text-align: left; }
+.besoins button:hover { border-color: var(--encre-3); }
+.besoins button[aria-pressed="true"] { border-style: solid; border-color: var(--encre); background: var(--plan); }
+.besoins button:disabled { opacity: .4; cursor: not-allowed; }
+.lettre { display: inline-grid; place-items: center; flex: none; min-width: 20px; height: 20px; padding: 0 3px; border-radius: 4px; border: 2px solid var(--encre-3); color: var(--encre-3); font-family: var(--f-titre); font-stretch: 100%; font-weight: 800; font-size: 11.5px; line-height: 1; font-style: normal; }
+.besoins button[aria-pressed="true"] .lettre, .lettre.pleine { background: var(--encre); border-color: var(--encre); color: var(--plan); }
+
+/* Billet : le trajet préparé pour une candidature, avec son talon et sa ligne de perforation */
+.billet { display: grid; grid-template-columns: auto minmax(0, 1fr); border: 2px solid var(--plaque); border-radius: 10px; background: var(--fond); overflow: hidden; }
+.billet-talon { writing-mode: vertical-rl; transform: rotate(180deg); display: grid; place-items: center; padding: 10px 7px; background: var(--plaque); color: var(--plaque-texte); font-family: var(--f-titre); font-stretch: 100%; font-weight: 800; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; }
+.billet-corps { display: grid; gap: 2px; min-width: 0; margin-left: 7px; padding: 10px 16px 11px; border-left: 2px dashed var(--plaque); }
+.billet-pour { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+.billet-pour b { font-family: var(--f-titre); font-weight: 900; font-stretch: 112%; font-size: clamp(21px, 2.6vw, 28px); line-height: 1.05; letter-spacing: -.01em; text-transform: uppercase; overflow-wrap: anywhere; }
+.billet-poste { margin: 0; font-family: var(--f-titre); font-stretch: 90%; font-weight: 700; font-size: 15px; letter-spacing: .04em; text-transform: uppercase; color: var(--encre-2); }
+.billet-poste:empty { display: none; }
+.billet-note { margin: 4px 0 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 14px; font-size: 13.5px; color: var(--encre-3); }
+.billet-note a { font-family: var(--f-titre); font-stretch: 90%; font-weight: 700; color: var(--encre-2); }
+
+/* Écran de quai */
+.quai { margin-top: 16px; background: var(--led-fond); border-radius: 10px; padding: 12px 16px; color: var(--led); font-family: var(--f-led); border: 3px solid #2a2f38; box-shadow: inset 0 0 24px rgba(0, 0, 0, .6); overflow: hidden; }
+.quai-ligne { display: flex; align-items: center; gap: 12px; font-size: clamp(16px, 2vw, 22px); line-height: 1.2; text-shadow: 0 0 8px rgba(255, 178, 26, .55); }
+.quai-ligne .q-ronds { display: inline-flex; gap: 3px; }
+.quai-ligne .q-dir { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.quai-ligne .q-etat { animation: clignote 1.6s steps(1) infinite; }
+.quai-defile { margin-top: 8px; border-top: 1px dashed var(--led-doux); padding-top: 8px; overflow: hidden; white-space: nowrap; font-size: clamp(14px, 1.6vw, 17px); text-shadow: 0 0 6px rgba(255, 178, 26, .45); }
+.quai-defile p { display: inline-block; margin: 0; padding-left: 0; animation: defile var(--duree, 30s) linear infinite; }
+@keyframes defile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes clignote { 50% { opacity: .25; } }
+
+/* Plan */
+.plan-cadre { margin-top: 16px; background: var(--plan); border: 1px solid var(--filet); border-radius: 12px; overflow: hidden; }
+.plan-defile { overflow-x: auto; }
+.plan-defile svg { display: block; width: 100%; min-width: 940px; height: auto; }
+.plan-pied { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; padding: 10px 16px; border-top: 1px solid var(--filet); font-size: 12.5px; color: var(--encre-3); }
+.zone-a { fill: var(--zone-a); } .zone-b { fill: var(--zone-b); }
+.zone-txt { font-family: var(--f-titre); font-weight: 700; font-size: 11px; letter-spacing: .1em; fill: var(--encre-3); text-transform: uppercase; }
+.trace { fill: none; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; transition: opacity .5s; }
+.trace.b { stroke: var(--l1); } .trace.p { stroke: var(--l2); } .trace.d { stroke: var(--l3); } .trace.e { stroke: var(--le); stroke-dasharray: 14 7; stroke-linecap: butt; }
+.trace.t1 { stroke: var(--s1); } .trace.t2 { stroke: var(--s2); } .trace.t3 { stroke: var(--s3); } .trace.t4 { stroke: var(--s4); }
+.trace.fermee { stroke-dasharray: 6 6; stroke-linecap: butt; opacity: .55; }
+.pale { opacity: .14; }
+.station { cursor: pointer; transition: opacity .5s; }
+.station .marq { fill: var(--plan); stroke: var(--encre); stroke-width: 2.5; transition: stroke .3s, stroke-width .3s; }
+.station .coeur { fill: var(--encre); }
+.station .nom { font-family: var(--f-titre); font-stretch: 78%; font-weight: 700; font-size: 15px; fill: var(--encre); }
+.station .an { font-family: var(--f-titre); font-stretch: 90%; font-size: 11.5px; fill: var(--encre-3); }
+.station.terminus .nom { font-size: 19px; font-weight: 800; }
+.station.choisie .marq { stroke-width: 4; }
+.station.choisie .nom { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.station.desservie .marq { stroke: var(--c); stroke-width: 5; }
+.station.fermee .marq { stroke-dasharray: 3 3; stroke: var(--encre-3); }
+.station.fermee .nom { fill: var(--encre-3); font-style: italic; }
+.station:focus-visible { outline: none; }
+.station:focus-visible .marq { stroke: var(--l3); stroke-width: 4; }
+.num-ligne text { font-family: var(--f-titre); font-weight: 800; font-size: 12px; fill: #fff; }
+.titre-plan { font-family: var(--f-titre); font-weight: 800; font-stretch: 110%; font-size: 15px; fill: var(--encre); }
+.itin-halo { fill: none; stroke: var(--plan); stroke-width: 17; stroke-linecap: round; stroke-linejoin: round; }
+.trace.itin-trace { stroke-width: 10; }
+.itin-pied { fill: none; stroke: var(--encre-2); stroke-width: 4.5; stroke-linecap: round; stroke-dasharray: .5 9; }
+.station.etape .marq { stroke-width: 3.5; }
+.rame { transition: opacity .6s; pointer-events: none; }
+.rame .caisse { stroke: var(--plan); stroke-width: 2; }
+.rame .vitre { fill: var(--plan); opacity: .9; }
+.panneau.eclair { animation: eclair 1.2s ease; }
+@keyframes eclair { 0%, 40% { box-shadow: 0 0 0 4px var(--c); } 100% { box-shadow: 0 0 0 0 transparent; } }
+
+/* Ligne et fiche */
+.duo { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(24px, 4vw, 48px); padding-block: clamp(32px, 5vw, 56px); align-items: start; scroll-margin-top: 12px; }
+.tete-ligne { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.tete-ligne h2 { font-family: var(--f-titre); font-weight: 900; font-stretch: 100%; font-size: clamp(26px, 3.4vw, 40px); line-height: 1; margin: 0; }
+.direction { margin: 10px 0 0; font-family: var(--f-titre); font-stretch: 80%; font-weight: 600; font-size: 17px; color: var(--encre-2); }
+.bord { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin: 14px 0 0; }
+.bouton-bord { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; padding: 9px 16px; border-radius: 999px; border: 0; background: var(--encre); color: var(--plan); font-family: var(--f-titre); font-stretch: 90%; font-weight: 800; font-size: 15px; }
+.bouton-bord[aria-pressed="true"] { background: var(--l1); color: #fff; }
+.voyage { font-family: var(--f-titre); font-stretch: 85%; font-size: 14.5px; color: var(--encre-2); margin: 0; }
+.voyage b { color: var(--encre); }
+.pitch { font-size: clamp(19px, 2vw, 23px); line-height: 1.35; margin: 16px 0 0; font-weight: 700; max-width: 40ch; }
+.resume { margin: 12px 0 0; max-width: 64ch; color: var(--encre-2); }
+.horaires { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin: 20px 0 0; border-top: 3px solid var(--encre); }
+.horaires div { padding: 12px 12px 12px 0; min-width: 0; }
+.horaires div + div { padding-left: 12px; border-left: 1px solid var(--filet); }
+.horaires dt { font-family: var(--f-titre); font-weight: 800; font-stretch: 90%; font-size: clamp(22px, 2.4vw, 30px); line-height: 1.05; }
+.horaires dd { margin: 4px 0 0; font-size: 13.5px; color: var(--encre-2); line-height: 1.4; }
+.trajet { font-family: var(--f-titre); font-stretch: 90%; margin: 14px 0 0; font-size: 13.5px; color: var(--encre-3); }
+
+.bande { list-style: none; margin: 26px 0 0; padding: 0; }
+.arret { display: grid; grid-template-columns: var(--cols, 32px) minmax(0, 1fr); gap: 12px; cursor: pointer; border-radius: 8px; scroll-margin: 80px; }
+.arret:hover .a-nom { text-decoration: underline; }
+.arret.choisi { background: var(--plan); box-shadow: inset 0 0 0 1px var(--filet); }
+.voies { position: relative; display: flex; justify-content: center; gap: 4px; }
+.voie { position: relative; width: 6px; }
+.voie::before { content: ""; position: absolute; left: 0; right: 0; top: 0; bottom: 0; background: var(--c); }
+.arret:first-child .voie::before { top: 22px; }
+.arret:last-child .voie::before { bottom: calc(100% - 22px); }
+.voie .point { position: absolute; top: 14px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--plan); border: 3px solid var(--encre); }
+.arret.choisi .voie .point { background: var(--c); }
+.voie.vide::before { opacity: .35; }
+.a-corps { padding: 10px 10px 18px 0; min-width: 0; }
+.a-nom { font-family: var(--f-titre); font-stretch: 80%; font-weight: 800; font-size: 19px; line-height: 1.15; }
+.a-meta { font-family: var(--f-titre); font-stretch: 90%; font-size: 13.5px; color: var(--encre-3); margin-top: 2px; }
+.a-phrase { margin: 6px 0 0; font-size: 15px; color: var(--encre-2); }
+.a-corr { display: inline-flex; gap: 3px; vertical-align: 2px; margin-left: 6px; }
+.arret.form .a-nom { font-weight: 600; font-style: italic; }
+.preuves { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.preuves li { display: flex; gap: 8px; align-items: baseline; font-size: 15px; color: var(--encre-2); }
+.preuves li .tags { display: inline-flex; gap: 3px; flex: none; }
+.preuves li .puce { flex: none; width: 9px; height: 9px; border-radius: 50%; border: 2px solid var(--encre); transform: translateY(-1px); }
+.corresp { display: grid; grid-template-columns: var(--cols, 32px) minmax(0, 1fr); gap: 12px; }
+.corresp .voies { justify-content: center; }
+.corresp .voie::before { background: repeating-linear-gradient(to bottom, var(--encre-3) 0 3px, transparent 3px 8px); }
+.corresp p { margin: 0; padding: 4px 0 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-family: var(--f-titre); font-stretch: 85%; font-weight: 700; font-size: 14px; color: var(--encre-2); }
+.besoins-choisis { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+.besoins-choisis span { display: inline-flex; align-items: center; gap: 8px; }
+
+.fiche { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 16px); background: var(--plan); border: 1px solid var(--filet); border-radius: 12px; overflow: hidden; min-width: 0; scroll-margin-top: 12px; }
+.plaque { background: var(--plaque); color: var(--plaque-texte); padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.plaque h3 { margin: 0; font-family: var(--f-titre); font-stretch: 75%; font-weight: 800; font-size: clamp(22px, 2.6vw, 30px); line-height: 1.05; letter-spacing: .01em; }
+.plaque .corr { display: inline-flex; gap: 4px; }
+.fiche-corps { padding: 18px; display: grid; gap: 12px; }
+.fiche-corps p { margin: 0; }
+.f-role { font-weight: 700; font-size: 18px; }
+.f-meta { font-family: var(--f-titre); font-stretch: 90%; color: var(--encre-3); font-size: 14.5px; }
+.f-phrase { font-size: 16px; padding: 10px 12px; border-left: 4px solid var(--c, var(--encre)); background: var(--fond); border-radius: 0 6px 6px 0; }
+.f-puces { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.f-puces li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px; font-size: 15px; }
+.f-puces li::before { content: ""; width: 10px; height: 10px; margin-top: 7px; border-radius: 50%; background: var(--c, var(--encre)); }
+.f-puces li.eteinte { color: var(--encre-3); }
+.f-puces li.eteinte::before { background: var(--filet); }
+.sorties { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.sorties li { display: flex; gap: 10px; align-items: baseline; font-size: 14.5px; }
+.sorties .no { flex: none; display: inline-grid; place-items: center; min-width: 24px; height: 20px; padding: 0 5px; border-radius: 4px; background: var(--encre); color: var(--plan); font-family: var(--f-titre); font-weight: 800; font-size: 11.5px; }
+.sorties a { font-weight: 700; }
+
+/* À bord, tramway Stratemind */
+section.bloc { padding-block: clamp(36px, 6vw, 64px); border-top: 1px solid var(--filet); }
+.bloc h2 { font-family: var(--f-titre); font-weight: 900; font-stretch: 110%; font-size: clamp(26px, 3.6vw, 44px); line-height: 1; margin: 8px 0 0; text-wrap: balance; }
+.bloc .intro { color: var(--encre-2); margin: 10px 0 0; max-width: 64ch; }
+.services { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); margin-top: 22px; }
+.puces-bord { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.puces-bord li { padding: 6px 12px; border-radius: 6px; background: var(--plan); border: 1px solid var(--filet); font-size: 14.5px; }
+.puces-bord.fort li { border: 2px solid var(--c, var(--encre)); font-weight: 700; }
+.cherche { margin: 0; padding: 14px 16px; border: 2px dashed var(--encre-3); border-radius: 8px; }
+.familles { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0 0; font-size: 13.5px; color: var(--encre-2); }
+.familles span { display: inline-flex; align-items: center; gap: 6px; }
+.panneaux { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 14px; margin-top: 22px; }
+.panneau { background: var(--plan); border: 1px solid var(--filet); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; min-width: 0; transition: opacity .5s; scroll-margin-top: 20px; }
+.panneau.pale { opacity: .45; }
+.panneau-plaque { background: var(--c); color: #fff; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.panneau-plaque h3 { margin: 0; font-family: var(--f-titre); font-stretch: 78%; font-weight: 800; font-size: 24px; line-height: 1.05; }
+.panneau-plaque span { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; text-align: right; }
+.panneau-corps { padding: 16px; display: grid; gap: 10px; flex: 1; align-content: start; }
+.panneau-corps p { margin: 0; }
+.p-accroche { font-weight: 700; }
+.p-quoi { font-size: 14.5px; color: var(--encre-2); }
+.p-preuves { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin: 4px 0 0; padding-top: 10px; border-top: 1px solid var(--filet); }
+.p-preuves dt { font-family: var(--f-titre); font-stretch: 90%; font-weight: 800; font-size: 20px; line-height: 1.1; }
+.p-preuves dd { margin: 3px 0 0; font-size: 12.5px; color: var(--encre-3); line-height: 1.35; }
+.p-pied { font-size: 12.5px; color: var(--encre-3); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; padding: 0 16px 14px; }
+.p-pied a { color: var(--encre); font-weight: 700; }
+
+.info { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 20px 40px; align-items: end; }
+.courriel { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.courriel code { font-family: var(--f-titre); font-stretch: 90%; font-weight: 700; font-size: clamp(17px, 2vw, 22px); padding: 8px 12px; background: var(--plan); border: 2px solid var(--encre); border-radius: 6px; user-select: all; overflow-wrap: anywhere; }
+.copier { cursor: pointer; padding: 10px 14px; border-radius: 6px; border: 0; background: var(--encre); color: var(--plan); font-weight: 700; }
+footer .wrap { padding-block: 22px 40px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; font-size: 13.5px; color: var(--encre-3); border-top: 1px solid var(--filet); }
+footer nav { display: flex; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .cartouche { grid-template-columns: auto minmax(0, 1fr); }
+  .legende { grid-column: 1 / -1; grid-template-columns: repeat(2, auto); justify-content: start; gap: 6px 18px; }
+  .duo, .services, .info { grid-template-columns: minmax(0, 1fr); }
+  .fiche { position: static; }
+  .horaires { grid-template-columns: minmax(0, 1fr); }
+  .horaires div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--filet); }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+  .quai-defile { white-space: normal; }
+  .quai-defile p { animation: none; }
+  .quai-ligne .q-etat { animation: none; }
+}
+</style>
+
+<header class="wrap cartouche">
+  <div class="logo" aria-hidden="true">QC</div>
+  <div>
+    <h1>Réseau Quentin Coutarel</h1>
+    <p class="sous-titre"><span class="jour">Plan du réseau</span><span class="nuit">Plan du service de nuit</span> · édition <span id="edition"></span> · <span id="ville"></span></p>
+  </div>
+  <div class="legende" aria-label="Légende">
+    <span><i class="sym st"></i>Station : un poste</span>
+    <span><i class="sym co"></i>Correspondance</span>
+    <span><i class="sym fo"></i>Formation, certification</span>
+    <span><span class="rond e petit">E</span>Ligne express</span>
+  </div>
+</header>
+
+<nav class="wrap" aria-label="Choisir une ligne">
+  <p class="etiq">Choisir sa ligne</p>
+  <ul class="choix" id="choix"></ul>
+</nav>
+
+<section class="wrap borne" aria-labelledby="t-itin">
+  <div class="borne-cadre">
+    <aside class="billet" id="billet" aria-label="Billet" hidden>
+      <span class="billet-talon" aria-hidden="true">Billet</span>
+      <div class="billet-corps">
+        <p class="billet-pour"><span class="etiq">Trajet préparé pour</span><b id="bEntreprise"></b></p>
+        <p class="billet-poste" id="bPoste"></p>
+        <p class="billet-note"><span id="bNote"></span><button type="button" class="effacer" id="bRetour" hidden>Revenir au trajet préparé</button><a id="bLumiere" target="_blank" rel="noopener" hidden>Le même dossier en lumière ↗</a></p>
+      </div>
+    </aside>
+    <div class="borne-tete">
+      <p class="etiq" id="t-itin">Ou calculer un itinéraire</p>
+      <p class="borne-aide" id="borneAide">Choisissez un à trois besoins : le plan trace le trajet qui y répond, arrêt par arrêt.</p>
+      <button type="button" class="effacer" id="effacer" hidden>Effacer l'itinéraire</button>
+    </div>
+    <ul class="besoins" id="besoins" aria-label="Vos besoins"></ul>
+  </div>
+</section>
+
+<div class="wrap">
+  <div class="quai" aria-hidden="true">
+    <div class="quai-ligne"><span class="q-ronds" id="qRonds"></span><span class="q-dir" id="qDir"></span><span class="q-etat">À QUAI</span></div>
+    <div class="quai-defile"><p id="qTexte"></p></div>
+  </div>
+  <div class="plan-cadre">
+    <div class="plan-defile" id="defile" tabindex="0" aria-label="Plan du réseau, défilable horizontalement"><svg id="plan" viewBox="0 0 1280 500" role="img" aria-labelledby="planTitre"><title id="planTitre">Plan schématique du parcours : quatre lignes qui convergent vers le studio Stratemind</title></svg></div>
+    <div class="plan-pied"><span>Plan schématique : les distances entre stations ne suivent pas l'échelle du temps.</span><span>Touchez une station pour lire sa fiche.</span></div>
+  </div>
+</div>
+
+<div class="wrap duo" id="duo">
+  <div>
+    <div class="tete-ligne" id="teteLigne"></div>
+    <p class="direction" id="direction"></p>
+    <div class="bord">
+      <button type="button" class="bouton-bord" id="bord" aria-pressed="false">Monter à bord ▸</button>
+      <p class="voyage" id="voyage" aria-live="polite">Une visite d'une minute, station par station.</p>
+    </div>
+    <p class="pitch" id="pitch"></p>
+    <p class="resume" id="resume"></p>
+    <dl class="horaires" id="horaires"></dl>
+    <p class="trajet" id="trajet"></p>
+    <ol class="bande" id="bande" aria-label="Plan de ligne"></ol>
+  </div>
+  <aside class="fiche" id="fiche" aria-live="polite"></aside>
+</div>
+
+<section class="bloc" aria-labelledby="t-bord">
+  <div class="wrap">
+    <p class="etiq">Services à bord</p>
+    <h2 id="t-bord">Ce que la ligne transporte</h2>
+    <div class="services">
+      <div>
+        <p class="etiq" id="bordTitre"></p>
+        <ul class="puces-bord fort" id="competences"></ul>
+        <p class="etiq" style="margin-top:20px">Sur tout le réseau</p>
+        <ul class="puces-bord" id="qualites"></ul>
+      </div>
+      <div>
+        <p class="etiq">Prochain départ</p>
+        <p class="cherche" id="cherche" style="margin-top:10px"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bloc" aria-labelledby="t-reseau">
+  <div class="wrap">
+    <p class="etiq">Correspondance au terminus Studio Stratemind</p>
+    <h2 id="t-reseau">Tramway Stratemind · <span id="nbProjets"></span> stations</h2>
+    <p class="intro">Les réalisations du studio, conçues et pilotées du prototype au service en ligne. Quatre lignes de tram, une par famille, se croisent à stratemind.fr et à Mon espace. Les stations qui servent la ligne choisie restent allumées.</p>
+    <div class="familles" id="familles"></div>
+    <div class="plan-cadre">
+      <div class="plan-defile" id="defileTram" tabindex="0" aria-label="Plan du tramway Stratemind, défilable horizontalement"><svg id="tram" viewBox="0 0 1280 540" role="img" aria-labelledby="tramTitre"><title id="tramTitre">Plan du tramway Stratemind : seize projets sur quatre lignes</title></svg></div>
+      <div class="plan-pied"><span>Stations fermées : prototypes fondus dans ScaleUpizer. Stations en travaux : projets en développement.</span><span>Touchez une station pour voir son panneau.</span></div>
+    </div>
+    <div class="panneaux" id="panneaux"></div>
+  </div>
+</section>
+
+<section class="bloc" aria-labelledby="t-info">
+  <div class="wrap info">
+    <div>
+      <p class="etiq">Information voyageurs</p>
+      <h2 id="t-info">Monter à bord</h2>
+    </div>
+    <div class="courriel"><code id="courriel"></code><button type="button" class="copier" id="copier">Copier l'adresse</button></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span id="signature"></span>
+    <nav id="autres" aria-label="Le même parcours, autrement"></nav>
+  </div>
+</footer>
+
+<script src="/data.js"></script>
+<script>
+(function () {
+  "use strict";
+  const CV = window.CV;
+  const NS = "http://www.w3.org/2000/svg";
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const reduit = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const P = CV.person;
+  const expById = Object.fromEntries(CV.experiences.map((e) => [e.id, e]));
+  const formById = Object.fromEntries(CV.education.map((f) => [f.id, f]));
+  const projById = Object.fromEntries(CV.projects.map((p) => [p.id, p]));
+
+  /* ================= Le métro : un métier par ligne ================= */
+  const LIGNES = {
+    b: { num: "1", nom: "Business Developer", c: "var(--l1)", d: "M182,190 H630 L724,284 H1190",
+         arrets: ["bonnecaze", "arena", "amex", "iobsp", "lanet", "1984", "mtarget", "stratemind"] },
+    p: { num: "2", nom: "Chef de projet", c: "var(--l2)", d: "M182,218 L278,314 H1190",
+         arrets: ["bonnecaze", "lanet", "icpo", "1984", "mtarget", "stratemind"] },
+    d: { num: "3", nom: "Chef de produit", c: "var(--l3)", d: "M70,420 H651 L742,329 H1190",
+         arrets: ["licence", "lionbridge", "lanet", "icpo", "1984", "mtarget", "stratemind"] },
+    e: { num: "E", nom: "Head of Product & Growth", c: "var(--le)", d: "M182,204 H406 L501,299 H1190",
+         arrets: ["bonnecaze", "arena", "lanet", "1984", "mtarget", "stratemind"] }
+  };
+  const ORDRE = ["b", "p", "d", "e"];
+  const LENS_LIGNES = { business: ["b"], projet: ["p"], produit: ["d"], builder: ["b", "p", "d"], growth: ["e"] };
+  const CHOIX = ["business", "projet", "produit", "builder", "growth"];
+  const ST = {
+    licence:    { x: 70,   ys: [420], pos: "bas",  nom: "Toulouse le Mirail", ref: ["form", "licence"] },
+    bonnecaze:  { x: 182,  ys: [190, 204, 218], pos: "haut", nom: "Cabinet Bonnecaze", ref: ["exp", "bonnecaze"] },
+    lionbridge: { x: 294,  ys: [420], pos: "bas",  nom: "Lionbridge", ref: ["exp", "lionbridge"] },
+    arena:      { x: 406,  ys: [190, 204], pos: "haut", nom: "Arena Productions", ref: ["exp", "arena"] },
+    amex:       { x: 518,  ys: [190], pos: "haut", nom: "AMEX", ref: ["exp", "amex"] },
+    iobsp:      { x: 630,  ys: [190], pos: "haut", nom: "Babylone · IOBSP", ref: ["form", "iobsp"] },
+    lanet:      { x: 742,  ys: [284, 299, 314, 329], pos: "haut", ancre: "start", dx: 14, nom: "Lanet EOOD", ref: ["exp", "lanet"] },
+    icpo:       { x: 854,  ys: [314, 329], pos: "bas",  nom: "Scrum League · icPO", ref: ["form", "icpo"] },
+    "1984":     { x: 966,  ys: [284, 299, 314, 329], pos: "haut", nom: "1984 Agency", ref: ["exp", "1984"] },
+    mtarget:    { x: 1078, ys: [284, 299, 314, 329], pos: "bas",  nom: "Mtarget", ref: ["exp", "mtarget"] },
+    stratemind: { x: 1190, ys: [284, 299, 314, 329], pos: "haut", nom: "Studio Stratemind", ref: ["exp", "stratemind"], terminus: true }
+  };
+  /* Ordre explicite : une clé numérique comme « 1984 » passerait sinon en tête de l'objet. */
+  const ORDRE_ST = ["licence", "bonnecaze", "lionbridge", "arena", "amex", "iobsp", "lanet", "icpo", "1984", "mtarget", "stratemind"];
+  const lignesDe = (sid) => ORDRE.filter((l) => LIGNES[l].arrets.includes(sid));
+  const objet = (sid) => { const [t, id] = ST[sid].ref; return t === "exp" ? expById[id] : formById[id]; };
+  const anDe = (sid) => { const o = objet(sid); return (o.from || o.date).slice(0, 4); };
+  const rond = (l, petit) => `<span class="rond ${l}${petit ? " petit" : ""}" title="Ligne ${LIGNES[l].num} · ${esc(LIGNES[l].nom)}">${LIGNES[l].num}</span>`;
+
+  /* ================= L'itinéraire : du besoin d'un recruteur aux arrêts qui y répondent =================
+     Un arrêt est desservi quand une réalisation du CV (une puce, mot pour mot) répond au besoin.
+     Chaque besoin a sa ligne de prédilection ; le calcul choisit ensuite une ligne par arrêt,
+     au moindre coût : rester sur sa ligne 0, changer en station 1, marcher entre deux lignes 3. */
+  const BESOINS = CV.needs;
+  const besoinById = Object.fromEntries(BESOINS.map((b) => [b.id, b]));
+  const MAX_BESOINS = 3;
+  function preuves(sid, ids) {
+    const [t, id] = ST[sid].ref;
+    if (t === "form") {
+      const qui = ids.filter((n) => besoinById[n].form.includes(id)), f = formById[id];
+      return qui.length ? [{ t: f.title + " · " + f.detail, qui }] : [];
+    }
+    return expById[id].bullets.map((b) => ({ t: b.t, qui: ids.filter((n) => besoinById[n].re.test(b.t)) })).filter((x) => x.qui.length);
+  }
+  function itineraire(ids) {
+    const arrets = ORDRE_ST.map((sid) => ({ sid, preuves: preuves(sid, ids) })).filter((a) => a.preuves.length);
+    if (!arrets.length) return null;
+    arrets.forEach((a) => { a.qui = ids.filter((n) => a.preuves.some((x) => x.qui.includes(n))); a.maison = a.qui.map((n) => besoinById[n].l); });
+    const pref = (a, l) => (a.maison.includes(l) ? 0 : 0.3);
+    let couts = Object.fromEntries(lignesDe(arrets[0].sid).map((l) => [l, { c: pref(arrets[0], l), chemin: [l] }]));
+    for (let i = 1; i < arrets.length; i++) {
+      const prec = arrets[i - 1].sid, a = arrets[i], suiv = {};
+      lignesDe(a.sid).forEach((l) => {
+        let best = null;
+        Object.entries(couts).forEach(([lp, v]) => {
+          const c = v.c + (lp === l ? 0 : LIGNES[l].arrets.includes(prec) ? 1 : 3) + pref(a, l);
+          if (!best || c < best.c - 1e-9) best = { c, chemin: [...v.chemin, l] };
+        });
+        suiv[l] = best;
+      });
+      couts = suiv;
+    }
+    const fin = Object.values(couts).sort((x, y) => x.c - y.c)[0];
+    arrets.forEach((a, i) => (a.l = fin.chemin[i]));
+    const troncons = arrets.slice(1).map((a, i) => {
+      const de = arrets[i], pied = !LIGNES[a.l].arrets.includes(de.sid);
+      return { de: de.sid, a: a.sid, l: a.l, depuis: de.l, pied, change: pied || de.l !== a.l };
+    });
+    return { arrets, troncons };
+  }
+  /* Géométrie : les tracés ne vont que vers la droite, on lit donc y en fonction de x. */
+  const sommets = {};
+  function sommetsDe(l) {
+    if (!sommets[l]) {
+      const v = []; let x = 0, y = 0;
+      LIGNES[l].d.match(/[MLH][^MLH]*/g).forEach((c) => {
+        const n = c.slice(1).trim().split(/[\s,]+/).map(Number);
+        if (c[0] === "H") x = n[0]; else { x = n[0]; y = n[1]; }
+        v.push([x, y]);
+      });
+      sommets[l] = v;
+    }
+    return sommets[l];
+  }
+  function yA(l, x) {
+    const v = sommetsDe(l);
+    for (let i = 1; i < v.length; i++) { const [x0, y0] = v[i - 1], [x1, y1] = v[i]; if (x <= x1) return x1 === x0 ? y1 : y0 + (y1 - y0) * (x - x0) / (x1 - x0); }
+    return v[v.length - 1][1];
+  }
+  function morceau(l, xa, xb) {
+    const pts = [[xa, yA(l, xa)], ...sommetsDe(l).filter(([x]) => x > xa && x < xb), [xb, yA(l, xb)]];
+    return "M" + pts.map(([x, y]) => x + "," + (+y.toFixed(1))).join(" L");
+  }
+  function mois(s) { const [a, m] = s.split("-").map(Number); return [a, m || 1]; }
+  function nbMois(e) {
+    const [fa, fm] = mois(e.from), d = new Date();
+    const [ta, tm] = e.to ? mois(e.to) : [d.getFullYear(), d.getMonth() + 1];
+    return (ta - fa) * 12 + (tm - fm) + 1;
+  }
+  function enAns(n) { const a = Math.floor(n / 12), m = n % 12; return [a ? a + " an" + (a > 1 ? "s" : "") : "", m ? m + " mois" : ""].filter(Boolean).join(" "); }
+  const lettreDe = (n) => "ABC"[itin.ids.indexOf(n)];
+  const lettre = (n) => `<i class="lettre pleine" title="${esc(besoinById[n].nom)}">${lettreDe(n)}</i>`;
+
+  /* ================= Le tramway : une ligne par famille de projets ================= */
+  const TRAMS = {
+    t1: { num: "T1", fam: "Gamme sites", c: "var(--s1)", d: ["M640,250 H1080"], arrets: ["guide", "cube", "webizy", "adminizy"] },
+    t2: { num: "T2", fam: "Clients", c: "var(--s2)", d: ["M210,420 H1040"], fermees: ["M120,360 H150 L210,420", "M120,480 H150 L210,420"], arrets: ["leadfactory", "fiatlux", "scaleupizer", "devis", "espace"] },
+    t3: { num: "T3", fam: "Studio", c: "var(--s3)", d: ["M420,266 H680 L814,400 H1040"], arrets: ["stratedeck", "guide", "compte", "espace"] },
+    t4: { num: "T4", fam: "Jeux et récits", c: "var(--s4)", d: ["M160,110 H476 L600,234 H680 L804,110 H1060"], arrets: ["livrevivant", "dimanche", "cvquest", "guide", "arcade", "ardoise"] }
+  };
+  const TS = {
+    livrevivant: { x: 160, ys: [110], pos: "haut" },
+    dimanche:    { x: 300, ys: [110], pos: "haut" },
+    cvquest:     { x: 440, ys: [110], pos: "haut" },
+    guide:       { x: 640, ys: [234, 250, 266], pos: "haut", gare: true },
+    arcade:      { x: 900, ys: [110], pos: "haut" },
+    ardoise:     { x: 1060, ys: [110], pos: "haut" },
+    stratedeck:  { x: 420, ys: [266], pos: "bas" },
+    cube:        { x: 800, ys: [250], pos: "bas" },
+    webizy:      { x: 940, ys: [250], pos: "bas" },
+    adminizy:    { x: 1080, ys: [250], pos: "bas" },
+    compte:      { x: 880, ys: [400], pos: "haut" },
+    espace:      { x: 1040, ys: [400, 420], pos: "droite" },
+    leadfactory: { x: 120, ys: [360], pos: "haut" },
+    fiatlux:     { x: 120, ys: [480], pos: "bas" },
+    scaleupizer: { x: 330, ys: [420], pos: "bas" },
+    devis:       { x: 560, ys: [420], pos: "bas" }
+  };
+  const FAM = Object.fromEntries(Object.entries(TRAMS).map(([k, t]) => [t.fam, { c: t.c, num: t.num }]));
+  const tramsDe = (pid) => Object.keys(TRAMS).filter((k) => TRAMS[k].arrets.includes(pid));
+  const tram = (k) => `<span class="tram" style="--c:${TRAMS[k].c}">${TRAMS[k].num}</span>`;
+  function etatCourt(p) {
+    if (p.status === "merged") return "fermée";
+    if (p.status === "dev") return "en travaux";
+    if (p.status === "internal") return "service interne";
+    if (p.id === "compte") return "en recette";
+    if (p.id === "espace") return "en essai";
+    if (p.status === "demo") return "démo";
+    return p.statusLabel.toLowerCase();
+  }
+
+  /* ================= Dessin commun d'une station ================= */
+  function station(o) {
+    const y0 = Math.min(...o.ys), y1 = Math.max(...o.ys);
+    const r = o.grand ? 11 : 9, seul = o.ys.length === 1;
+    const marq = seul ? `<circle class="marq" cx="${o.x}" cy="${y0}" r="7.5"/>`
+      : `<rect class="marq" x="${o.x - r}" y="${y0 - r}" width="${2 * r}" height="${y1 - y0 + 2 * r}" rx="${r}"/>`;
+    const coeur = o.coeur ? `<circle class="coeur" cx="${o.x}" cy="${(y0 + y1) / 2}" r="2.6"/>` : "";
+    const anc = o.ancre || "middle", lx = o.x + (o.dx || 0);
+    const haut = y0 - (seul ? 7.5 : r) - 12, bas = y1 + (seul ? 7.5 : r) + 20;
+    let lib;
+    if (o.pos === "haut") lib = `<text class="nom" x="${lx}" y="${haut - (o.grand ? 18 : 15)}" text-anchor="${anc}">${esc(o.nom)}</text><text class="an" x="${lx}" y="${haut}" text-anchor="${anc}">${esc(o.sous)}</text>`;
+    else if (o.pos === "droite") lib = `<text class="nom" x="${o.x + 18}" y="${y0 + 6}">${esc(o.nom)}</text><text class="an" x="${o.x + 18}" y="${y0 + 21}">${esc(o.sous)}</text>`;
+    else lib = `<text class="nom" x="${lx}" y="${bas}" text-anchor="${anc}">${esc(o.nom)}</text><text class="an" x="${lx}" y="${bas + 15}" text-anchor="${anc}">${esc(o.sous)}</text>`;
+    return `<g class="station${o.classe ? " " + o.classe : ""}" ${o.data} tabindex="0" role="button" aria-label="${esc(o.aria)}">${marq}${coeur}${lib}</g>`;
+  }
+
+  function dessinerPlan() {
+    const zones = [[0, 686, "zone-a", "Zone 1 · Comprendre et vendre"], [686, 1022, "zone-b", "Zone 2 · Organiser"], [1022, 1280, "zone-a", "Zone 3 · Concevoir"]];
+    let s = zones.map(([a, b, c, t]) => `<rect class="${c}" x="${a}" y="0" width="${b - a}" height="500"/><text class="zone-txt" x="${a + 16}" y="30">${esc(t)}</text>`).join("");
+    s += ORDRE.map((l) => `<path class="trace ${l}" data-l="${l}" d="${LIGNES[l].d}"/>`).join("");
+    const tetes = { b: [150, 190], p: [150, 218], d: [38, 420], e: [150, 204] };
+    s += ORDRE.map((l) => {
+      const [x, y] = tetes[l], c = LIGNES[l].c;
+      const forme = l === "e" ? `<rect x="${x - 11}" y="${y - 11}" width="22" height="22" rx="5" style="fill:${c}"/>` : `<circle cx="${x}" cy="${y}" r="11" style="fill:${c}"/>`;
+      return `<g class="num-ligne" data-l="${l}">${forme}<text x="${x}" y="${y + 4}" text-anchor="middle">${LIGNES[l].num}</text></g>`;
+    }).join("");
+    s += `<g id="itin"></g>`;
+    s += ORDRE_ST.map((sid) => {
+      const st = ST[sid];
+      return station({ x: st.x, ys: st.ys, pos: st.pos, ancre: st.ancre, dx: st.dx, nom: st.nom, grand: st.terminus,
+        sous: anDe(sid) + (st.terminus ? " · terminus · tram T1 à T4" : ""), coeur: st.ref[0] === "form",
+        classe: st.terminus ? "terminus" : "", data: `data-s="${sid}"`, aria: "Station " + st.nom + ", " + anDe(sid) });
+    }).join("");
+    s += `<g id="rames"></g>`;
+    $("#plan").insertAdjacentHTML("beforeend", s);
+  }
+
+  function dessinerTram() {
+    let s = `<text class="titre-plan" x="24" y="34">Tramway Stratemind</text>`;
+    s += Object.entries(TRAMS).map(([k, t]) => t.d.map((d) => `<path class="trace ${k}" d="${d}"/>`).join("") + (t.fermees || []).map((d) => `<path class="trace ${k} fermee" d="${d}"/>`).join("")).join("");
+    const tetes = { t1: [1124, 250], t2: [76, 420], t3: [382, 266], t4: [118, 110] };
+    s += Object.entries(tetes).map(([k, [x, y]]) => `<g class="num-ligne"><rect x="${x - 17}" y="${y - 11}" width="34" height="22" rx="5" style="fill:${TRAMS[k].c}"/><text x="${x}" y="${y + 4}" text-anchor="middle">${TRAMS[k].num}</text></g>`).join("");
+    s += Object.entries(TS).map(([pid, t]) => {
+      const p = projById[pid];
+      return station({ x: t.x, ys: t.ys, pos: t.pos, nom: p.name, grand: t.gare, sous: t.gare ? "gare centrale · " + etatCourt(p) : etatCourt(p),
+        classe: p.status === "merged" ? "fermee" : "", data: `data-p="${pid}"`, aria: "Station " + p.name + ", " + etatCourt(p) });
+    }).join("");
+    $("#tram").insertAdjacentHTML("beforeend", s);
+  }
+
+  /* ================= Les rames ================= */
+  const rames = {};
+  const traceDe = (l) => $(`#plan .trace[data-l="${l}"]`);
+  function rameDe(l) {
+    if (!rames[l]) {
+      const g = document.createElementNS(NS, "g");
+      g.setAttribute("class", "rame"); g.style.opacity = "0";
+      g.innerHTML = `<rect class="caisse" x="-17" y="-7" width="34" height="14" rx="6" style="fill:${LIGNES[l].c}"/><rect class="vitre" x="-11" y="-3" width="5" height="6" rx="1"/><rect class="vitre" x="-2.5" y="-3" width="5" height="6" rx="1"/><rect class="vitre" x="6" y="-3" width="5" height="6" rx="1"/>`;
+      $("#rames").appendChild(g);
+      rames[l] = { g, pos: 0, anim: 0 };
+    }
+    return rames[l];
+  }
+  function poser(l, len) {
+    const t = traceDe(l), tot = t.getTotalLength();
+    const a = t.getPointAtLength(Math.max(0, Math.min(tot, len))), b = t.getPointAtLength(Math.min(tot, len + 2)), c = t.getPointAtLength(Math.max(0, len - 2));
+    const ang = Math.atan2(b.y - c.y, b.x - c.x) * 180 / Math.PI;
+    rameDe(l).g.setAttribute("transform", `translate(${a.x.toFixed(1)} ${a.y.toFixed(1)}) rotate(${ang.toFixed(1)})`);
+    return a.x;
+  }
+  function longueurA(l, x) {
+    const t = traceDe(l); let lo = 0, hi = t.getTotalLength();
+    for (let k = 0; k < 22; k++) { const m = (lo + hi) / 2; if (t.getPointAtLength(m).x < x) lo = m; else hi = m; }
+    return hi;
+  }
+  function saluer(sid, l) {
+    if (itin && !itin.r.arrets.some((a) => a.sid === sid)) return;
+    const g = $(`#plan .station[data-s="${sid}"]`); if (!g) return;
+    g.style.setProperty("--c", LIGNES[l].c); g.classList.add("desservie");
+    setTimeout(() => g.classList.remove("desservie"), 650);
+  }
+  function rouler(l, de, a, duree, fin) {
+    const r = rameDe(l); cancelAnimationFrame(r.anim);
+    r.g.style.opacity = "1";
+    let xPrec = poser(l, de); const t0 = performance.now();
+    const pas = (t) => {
+      const k = Math.min(1, (t - t0) / duree), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      r.pos = de + (a - de) * e;
+      const x = poser(l, r.pos);
+      LIGNES[l].arrets.forEach((sid) => { const sx = ST[sid].x; if ((xPrec < sx - 1 && x >= sx - 1) || (k === 1 && Math.abs(x - sx) < 2 && xPrec !== x)) saluer(sid, l); });
+      xPrec = x;
+      if (k < 1) r.anim = requestAnimationFrame(pas); else if (fin) fin();
+    };
+    r.anim = requestAnimationFrame(pas);
+  }
+  function rangerRames() { Object.keys(rames).forEach((l) => { cancelAnimationFrame(rames[l].anim); rames[l].g.style.opacity = "0"; }); }
+  function lancerRames() {
+    itinJeton++;
+    if (reduit) return;
+    rangerRames();
+    if (itin) return parcourirItin();
+    LENS_LIGNES[lensCourante].forEach((l, i) => setTimeout(() => {
+      if (voyage || itin) return;
+      const tot = traceDe(l).getTotalLength();
+      rouler(l, 0, tot, 2600, () => setTimeout(() => { if (!voyage) rameDe(l).g.style.opacity = "0"; }, 900));
+    }, i * 220));
+  }
+
+  /* Une seule rame parcourt l'itinéraire, tronçon par tronçon, aux couleurs de la ligne empruntée. */
+  let itinJeton = 0;
+  function parcourirItin() {
+    const r = itin.r, jeton = itinJeton;
+    if (!r.troncons.length) return;
+    let i = 0;
+    const suivant = () => {
+      if (jeton !== itinJeton || voyage) return;
+      if (i >= r.troncons.length) { setTimeout(() => { if (jeton === itinJeton && !voyage) rangerRames(); }, 1200); return; }
+      const t = r.troncons[i++], cible = longueurA(t.l, ST[t.a].x);
+      Object.keys(rames).forEach((k) => { if (k !== t.l) rames[k].g.style.opacity = "0"; });
+      const de = t.pied ? Math.max(0, cible - 46) : longueurA(t.l, ST[t.de].x);
+      rouler(t.l, de, cible, t.pied ? 520 : 1000, () => setTimeout(suivant, t.change ? 380 : 200));
+    };
+    suivant();
+  }
+
+  /* ================= État et rendu ================= */
+  let lensCourante = "builder";
+  let stationCourante = "stratemind";
+  let itin = null;
+
+  /* Billet ou dossier de candidature : l'adresse porte l'entreprise, le poste et les besoins de l'offre. */
+  let dossier = null;
+  const memeTrajet = () => !!(itin && dossier && itin.ids.join() === dossier.besoins.join());
+  const adresseDossier = (ids) => CV.ecrireDossier({ type: dossier.type, brut: dossier.brut, besoins: ids, plein: dossier.plein, reglage: dossier.reglage });
+  const enCapitales = (s) => s.toLocaleUpperCase("fr");
+  function majBillet() {
+    const vo = $("#versOrbite");
+    if (vo) vo.href = liens.orbite + "#" + (lensCourante === "growth" ? "growth" : "builder");
+    $("#billet").hidden = !dossier;
+    if (!dossier) return;
+    $("#bEntreprise").textContent = dossier.entreprise;
+    $("#bPoste").textContent = dossier.poste ? "Poste : " + dossier.poste : "";
+    const meme = memeTrajet();
+    $("#bNote").textContent = meme ? "Le trajet part des besoins de votre offre. Ajoutez-en ou retirez-en : il se recalcule."
+      : itin ? "Trajet modifié." : "Vous lisez une ligne entière.";
+    $("#bRetour").hidden = meme;
+    const lum = $("#bLumiere");
+    lum.hidden = dossier.type !== "dossier" || !liens.lumiere;
+    if (!lum.hidden) lum.href = liens.lumiere + "#" + adresseDossier(dossier.besoins);
+  }
+
+  function majBesoins() {
+    majBillet();
+    const ids = itin ? itin.ids : [];
+    $$("#besoins button").forEach((b) => {
+      const n = b.dataset.besoin, on = ids.includes(n);
+      b.setAttribute("aria-pressed", String(on));
+      b.disabled = !on && ids.length >= MAX_BESOINS;
+      $(".lettre", b).textContent = on ? "ABC"[ids.indexOf(n)] : "+";
+    });
+    $("#effacer").hidden = !itin;
+    $("#borneAide").textContent = !itin ? "Choisissez un à trois besoins : le plan trace le trajet qui y répond, arrêt par arrêt."
+      : ids.length >= MAX_BESOINS ? "Trois besoins au plus : retirez-en un pour en choisir un autre."
+      : "Ajoutez un besoin, ou retirez-en un : le trajet se recalcule.";
+  }
+
+  function rendre() {
+    majBesoins();
+    if (itin) return rendreItin();
+    $("#itin").innerHTML = "";
+    $$("#plan .station.etape").forEach((g) => g.classList.remove("etape"));
+    const L = CV.lenses[lensCourante];
+    const actives = LENS_LIGNES[lensCourante];
+    $$("#choix button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.lens === lensCourante)));
+    $$("#plan .trace, #plan .num-ligne").forEach((t) => t.classList.toggle("pale", !actives.includes(t.dataset.l)));
+    $$("#plan .station").forEach((g) => {
+      const sid = g.dataset.s;
+      g.classList.toggle("pale", !lignesDe(sid).some((l) => actives.includes(l)));
+      g.classList.toggle("choisie", sid === stationCourante);
+    });
+    $$("#tram .station").forEach((g) => g.classList.toggle("pale", !L.projects.includes(g.dataset.p)));
+
+    const couleur = actives.length === 1 ? LIGNES[actives[0]].c : "var(--encre)";
+    const arrets = ORDRE_ST.filter((sid) => lignesDe(sid).some((l) => actives.includes(l)));
+    const premier = arrets[0], dernier = arrets[arrets.length - 1];
+    const nomLigne = actives.length > 1 ? "Toutes lignes" : (lensCourante === "growth" ? "Ligne express" : "Ligne " + LIGNES[actives[0]].num);
+    $("#teteLigne").innerHTML = actives.map((l) => rond(l)).join("") + `<h2>${esc(L.title)}</h2>`;
+    $("#direction").textContent = nomLigne + " · de " + ST[premier].nom + " à " + ST[dernier].nom;
+    $("#pitch").textContent = L.pitch;
+    $("#resume").textContent = L.summary;
+    $("#horaires").innerHTML = L.kpis.map(([v, l]) => `<div><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`).join("");
+    const nbPostes = arrets.filter((sid) => ST[sid].ref[0] === "exp").length, nbForm = arrets.length - nbPostes;
+    $("#trajet").textContent = arrets.length + " stations, dont " + nbPostes + " postes et " + nbForm + " formation" + (nbForm > 1 ? "s" : "") + " · premier départ en " + anDe(premier) + " · en service aujourd'hui";
+
+    /* Écran de quai */
+    $("#qRonds").innerHTML = actives.map((l) => rond(l, true)).join("");
+    $("#qDir").textContent = L.title + " · direction " + ST[dernier].nom;
+    const messages = [L.pitch, ...L.kpis.map(([v, l]) => v + " " + l), arrets.length + " stations desservies"];
+    const texte = messages.map(esc).join("   ◆   ") + "   ◆   ";
+    $("#qTexte").innerHTML = texte + texte;
+    $("#qTexte").style.setProperty("--duree", Math.max(22, Math.round(texte.length * 0.16)) + "s");
+
+    /* Plan de ligne, le plus récent en haut */
+    $("#bande").style.setProperty("--cols", (actives.length * 10 + 22) + "px");
+    $("#bande").innerHTML = arrets.slice().reverse().map((sid) => {
+      const st = ST[sid], o = objet(sid), estExp = st.ref[0] === "exp", sert = lignesDe(sid);
+      const voies = actives.map((l) => `<span class="voie${sert.includes(l) ? "" : " vide"}" style="--c:${LIGNES[l].c}">${sert.includes(l) ? '<span class="point"></span>' : ""}</span>`).join("");
+      const autres = sert.filter((l) => !actives.includes(l));
+      const phrase = estExp ? (o.lines[lensCourante] || o.lines.builder) : o.detail;
+      const meta = estExp ? `${esc(o.role)} · ${o.from.slice(0, 4)}${o.to ? "–" + o.to.slice(0, 4) : " à aujourd'hui"}` : `${esc(o.title)} · ${o.date.slice(0, 4)}`;
+      return `<li class="arret${estExp ? "" : " form"}${sid === stationCourante ? " choisi" : ""}" data-s="${sid}" tabindex="0">
+        <span class="voies" aria-hidden="true">${voies}</span>
+        <div class="a-corps">
+          <div class="a-nom">${esc(st.nom)}${autres.length ? `<span class="a-corr" title="Correspondances">${autres.map((l) => rond(l, true)).join("")}</span>` : ""}</div>
+          <div class="a-meta">${meta}</div>
+          <p class="a-phrase">${esc(phrase)}</p>
+        </div>
+      </li>`;
+    }).join("");
+
+    rendreFiche(couleur);
+
+    $("#bordTitre").textContent = "Sur la ligne " + L.title;
+    $("#competences").style.setProperty("--c", couleur);
+    $("#competences").innerHTML = L.skills.map((s) => `<li>${esc(s)}</li>`).join("");
+    $("#cherche").textContent = L.seek;
+
+    const reste = CV.projects.filter((p) => !L.projects.includes(p.id));
+    const liste = $("#panneaux");
+    [...L.projects.map((i) => projById[i]), ...reste].forEach((p) => {
+      const el = $(`.panneau[data-p="${p.id}"]`);
+      el.classList.toggle("pale", !L.projects.includes(p.id));
+      liste.appendChild(el);
+    });
+  }
+
+  function rendreItin() {
+    const r = itin.r, arrets = r.arrets, ids = itin.ids, sids = arrets.map((a) => a.sid);
+    const utilisees = ORDRE.filter((l) => arrets.some((a) => a.l === l));
+    const premier = arrets[0], dernier = arrets[arrets.length - 1];
+    $$("#choix button").forEach((b) => b.setAttribute("aria-pressed", "false"));
+    $$("#plan .trace").forEach((t) => t.classList.add("pale"));
+    $$("#plan .num-ligne").forEach((t) => t.classList.toggle("pale", !utilisees.includes(t.dataset.l)));
+    $$("#plan .station").forEach((g) => {
+      const sid = g.dataset.s, dedans = sids.includes(sid);
+      g.classList.toggle("pale", !dedans);
+      g.classList.toggle("etape", dedans);
+      g.classList.toggle("choisie", sid === stationCourante);
+    });
+    let calque = "";
+    r.troncons.forEach((t) => {
+      if (t.pied) {
+        const x1 = ST[t.de].x, y1 = yA(t.depuis, x1), x2 = ST[t.a].x, y2 = yA(t.l, x2);
+        calque += `<path class="itin-pied" d="M${x1},${y1} L${x2},${y2}"/>`;
+      } else {
+        const d = morceau(t.l, ST[t.de].x, ST[t.a].x);
+        calque += `<path class="itin-halo" d="${d}"/><path class="trace itin-trace ${t.l}" d="${d}"/>`;
+      }
+    });
+    $("#itin").innerHTML = calque;
+
+    /* La ligne prise à chaque arrêt, et les changements, en mots */
+    const de = (sid) => (/^[aeiouéèêh]/i.test(ST[sid].nom) ? "d'" : "de ") + ST[sid].nom;
+    const morceaux = []; let dep = premier, aPied = false;
+    r.troncons.forEach((t, i) => {
+      if (!t.change) return;
+      const ici = arrets[i];
+      if (dep.sid !== ici.sid) morceaux.push(`ligne ${LIGNES[ici.l].num} ${de(dep.sid)} à ${ST[ici.sid].nom}`);
+      else if (!aPied) morceaux.push(morceaux.length ? `arrêt à ${ST[ici.sid].nom}` : `départ ${de(ici.sid)}`);
+      if (t.pied) morceaux.push(`à pied jusqu'à ${ST[t.a].nom}`);
+      dep = t.pied ? arrets[i + 1] : ici; aPied = t.pied;
+    });
+    if (dep.sid !== dernier.sid) morceaux.push(`ligne ${LIGNES[dernier.l].num} ${de(dep.sid)} à ${ST[dernier.sid].nom}`);
+    else if (!morceaux.length) morceaux.push(`${ST[dernier.sid].nom}, ligne ${LIGNES[dernier.l].num}`);
+    const phrase = morceaux.join(", puis ");
+
+    const nbCorr = r.troncons.filter((t) => t.change).length, nbPied = r.troncons.filter((t) => t.pied).length;
+    const moisSurPlace = arrets.filter((a) => ST[a.sid].ref[0] === "exp").reduce((n, a) => n + nbMois(objet(a.sid)), 0);
+    const oFin = objet(dernier.sid);
+    const finTxt = dernier.sid === "stratemind" ? "aujourd'hui" : (oFin.to || oFin.date || "").slice(0, 4);
+
+    /* Écran de quai */
+    $("#qRonds").innerHTML = utilisees.map((l) => rond(l, true)).join("");
+    $("#qDir").textContent = (dossier ? "Pour " + enCapitales(dossier.entreprise) : "Itinéraire") + " · direction " + ST[dernier.sid].nom;
+    const messages = [...(memeTrajet() ? ["Trajet préparé pour " + enCapitales(dossier.entreprise) + (dossier.poste ? ", poste " + enCapitales(dossier.poste) : "")] : []), ids.map((n) => lettreDe(n) + " " + besoinById[n].nom).join(" + "), arrets.length + " arrêt" + (arrets.length > 1 ? "s" : "") + " · " + nbCorr + " correspondance" + (nbCorr > 1 ? "s" : ""), ...arrets.map((a) => ST[a.sid].nom + " " + anDe(a.sid))];
+    const texte = messages.map(esc).join("   ◆   ") + "   ◆   ";
+    $("#qTexte").innerHTML = texte + texte;
+    $("#qTexte").style.setProperty("--duree", Math.max(22, Math.round(texte.length * 0.16)) + "s");
+
+    /* Colonne de gauche : le trajet */
+    $("#teteLigne").innerHTML = utilisees.map((l) => rond(l)).join("") + `<h2>Votre itinéraire</h2>`;
+    const dePremier = de(premier.sid);
+    $("#direction").textContent = dePremier.charAt(0).toUpperCase() + dePremier.slice(1) + " (" + anDe(premier.sid) + ") à " + ST[dernier.sid].nom + " (" + finTxt + ")";
+    $("#pitch").innerHTML = `<span class="besoins-choisis">${ids.map((n) => `<span>${lettre(n)}${esc(besoinById[n].nom)}</span>`).join("")}</span>`;
+    $("#resume").textContent = "Le trajet ne s'arrête que là où une réalisation du CV répond à votre besoin. Chaque arrêt cite la sienne, mot pour mot.";
+    $("#horaires").innerHTML = [
+      [String(arrets.length), (arrets.length > 1 ? "arrêts" : "arrêt") + ", de " + anDe(premier.sid) + " à " + finTxt],
+      [String(nbCorr), nbCorr ? (nbCorr > 1 ? "correspondances" : "correspondance") + (nbPied ? `, dont ${nbPied} à pied` : "") : "correspondance : trajet direct"],
+      [moisSurPlace ? enAns(moisSurPlace) : "–", "passés sur ces postes"]
+    ].map(([v, l]) => `<div><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`).join("");
+    $("#trajet").textContent = phrase.charAt(0).toUpperCase() + phrase.slice(1) + ".";
+
+    $("#bande").style.setProperty("--cols", "32px");
+    $("#bande").innerHTML = arrets.map((a, i) => {
+      const st = ST[a.sid], o = objet(a.sid), estExp = st.ref[0] === "exp", c = LIGNES[a.l].c;
+      const meta = estExp ? `${esc(o.role)} · ${o.from.slice(0, 4)}${o.to ? "–" + o.to.slice(0, 4) : " à aujourd'hui"} · ${enAns(nbMois(o))}` : `${esc(o.org)} · ${o.date.slice(0, 4)}`;
+      const plusieurs = ids.length > 1;
+      const liste = a.preuves.map((x) => `<li>${plusieurs ? `<span class="tags">${x.qui.map((n) => lettre(n)).join("")}</span>` : '<span class="puce" aria-hidden="true"></span>'}<span>${esc(x.t)}</span></li>`).join("");
+      const sorties = a.sid === "stratemind" ? [...new Set(ids.flatMap((n) => besoinById[n].projets))] : [];
+      const tram = sorties.length ? `<p class="a-meta" style="margin-top:8px">Sorties vers le tramway : ${sorties.map((pid) => `<a href="#p-${pid}" data-panneau="${pid}">${esc(projById[pid].name)}</a>`).join(", ")}</p>` : "";
+      let li = `<li class="arret${estExp ? "" : " form"}${a.sid === stationCourante ? " choisi" : ""}" data-s="${a.sid}" tabindex="0">
+        <span class="voies" aria-hidden="true"><span class="voie" style="--c:${c}"><span class="point"></span></span></span>
+        <div class="a-corps">
+          <div class="a-nom">${esc(st.nom)}<span class="a-corr" title="Ligne empruntée">${rond(a.l, true)}</span></div>
+          <div class="a-meta">${meta}</div>
+          <ul class="preuves">${liste}</ul>${tram}
+        </div>
+      </li>`;
+      const t = r.troncons[i];
+      if (t && t.change) {
+        li += `<li class="corresp"><span class="voies" aria-hidden="true"><span class="voie"></span></span>
+          <p>${t.pied ? `Correspondance à pied jusqu'à ${esc(ST[t.a].nom)}, ligne ${rond(t.l, true)}` : `Correspondance à ${esc(st.nom)} : ligne ${rond(t.depuis, true)} → ${rond(t.l, true)}`}</p></li>`;
+      }
+      return li;
+    }).join("");
+
+    const ici = arrets.find((a) => a.sid === stationCourante);
+    rendreFiche(ici ? LIGNES[ici.l].c : "var(--encre)");
+
+    /* Tramway : les projets qui répondent aux besoins restent allumés */
+    const projets = [...new Set(ids.flatMap((n) => besoinById[n].projets))];
+    $$("#tram .station").forEach((g) => g.classList.toggle("pale", projets.length > 0 && !projets.includes(g.dataset.p)));
+    const panneaux = $("#panneaux");
+    [...projets.map((i) => projById[i]), ...CV.projects.filter((p) => !projets.includes(p.id))].forEach((p) => {
+      const el = $(`.panneau[data-p="${p.id}"]`);
+      el.classList.toggle("pale", projets.length > 0 && !projets.includes(p.id));
+      panneaux.appendChild(el);
+    });
+  }
+
+  function rendreFiche(couleur) {
+    const sid = stationCourante, st = ST[sid], o = objet(sid), estExp = st.ref[0] === "exp";
+    const lettres = lensCourante === "growth" ? "g" : CV.lenses[lensCourante].match;
+    const allume = itin ? (b) => itin.ids.some((n) => besoinById[n].re.test(b.t)) : (b) => lettres.split("").some((c) => b.k.includes(c));
+    let corps = "";
+    if (estExp) {
+      corps += `<p class="f-role">${esc(o.role)}</p><p class="f-meta">${esc(o.org)} · ${esc(o.place)}${o.contract ? " · " + esc(o.contract) : ""} · ${o.from.slice(0, 4)}${o.to ? "–" + o.to.slice(0, 4) : " à aujourd'hui"}</p>`;
+      corps += `<p class="f-phrase">${esc(o.lines[lensCourante] || o.lines.builder)}</p>`;
+      corps += `<ul class="f-puces">${o.bullets.map((b) => `<li class="${allume(b) ? "" : "eteinte"}">${esc(b.t)}</li>`).join("")}</ul>`;
+      if (o.projects && o.projects.length) {
+        corps += `<p class="etiq" style="margin-top:6px">Sorties vers le tramway Stratemind</p><ol class="sorties">${o.projects.map((pid, i) => `<li><span class="no">${i + 1}</span><span><a href="#p-${pid}" data-panneau="${pid}">${esc(projById[pid].name)}</a> · ${esc(projById[pid].tagline)}</span></li>`).join("")}</ol>`;
+      }
+    } else {
+      corps += `<p class="f-role">${esc(o.title)}</p><p class="f-meta">${esc(o.org)} · ${o.date.slice(0, 4)}</p><p class="f-phrase">${esc(o.detail)}</p>`;
+    }
+    const fiche = $("#fiche");
+    fiche.style.setProperty("--c", couleur);
+    fiche.innerHTML = `<div class="plaque"><h3>${esc(st.nom)}</h3><span class="corr" aria-label="Lignes desservies">${lignesDe(sid).map((l) => rond(l, true)).join("")}</span></div><div class="fiche-corps">${corps}</div>`;
+  }
+
+  /* ================= Construction ================= */
+  $("#edition").textContent = P.edition;
+  $("#ville").textContent = P.city;
+  $("#courriel").textContent = P.email;
+  $("#signature").textContent = P.name + " · plan édité en " + P.edition;
+  $("#nbProjets").textContent = CV.projects.length;
+  $("#qualites").innerHTML = CV.traits.map((t) => `<li>${esc(t)}</li>`).join("");
+  $("#choix").innerHTML = CHOIX.map((id) => {
+    const ls = LENS_LIGNES[id];
+    const sous = id === "builder" ? "toutes lignes" : id === "growth" ? "express" : "ligne " + LIGNES[ls[0]].num;
+    return `<li><button type="button" id="ligne-${id}" data-lens="${id}" aria-pressed="false"><span class="groupe-rond">${ls.map((l) => rond(l)).join("")}</span>${esc(CV.lenses[id].title)}<span class="sous">${sous}</span></button></li>`;
+  }).join("");
+  $("#besoins").innerHTML = BESOINS.map((b) => `<li><button type="button" id="besoin-${b.id}" data-besoin="${b.id}" aria-pressed="false"><i class="lettre" aria-hidden="true">+</i>${esc(b.nom)}</button></li>`).join("");
+  $("#familles").innerHTML = Object.keys(TRAMS).map((k) => `<span>${tram(k)}${esc(TRAMS[k].fam)}</span>`).join("");
+  $("#panneaux").innerHTML = CV.projects.map((p) => `
+    <article class="panneau" id="p-${p.id}" data-p="${p.id}" style="--c:${FAM[p.family].c}">
+      <div class="panneau-plaque"><h3>${esc(p.name)}</h3><span>${tramsDe(p.id).map((k) => TRAMS[k].num).join(" · ")}<br>${esc(p.statusLabel)}</span></div>
+      <div class="panneau-corps">
+        <p class="p-accroche">${esc(p.tagline)}</p>
+        <p class="p-quoi">${esc(p.what)}</p>
+        <dl class="p-preuves">${p.proof.map(([v, l]) => `<div><dt>${esc(v)}</dt><dd>${esc(l)}</dd></div>`).join("")}</dl>
+      </div>
+      <div class="p-pied"><span>${esc(p.family)}${p.into ? " · fondu dans " + esc(projById[p.into].name) : ""}${p.from ? " · né de " + p.from.map((f) => esc(projById[f].name)).join(" et ") : ""}</span>${p.url ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.urlLabel)} ↗</a>` : ""}</div>
+    </article>`).join("");
+  const liens = CV.links || {};
+  /* Pied de page : seul le CV classique (style Orbite) est cité, pour qui préfère le papier sans détour. */
+  $("#autres").innerHTML = liens.orbite ? `<span>Préférez-vous un CV classique ?</span><a id="versOrbite" href="${esc(liens.orbite)}#builder" target="_blank" rel="noopener">Le même parcours, en CV classique ↗</a>` : "";
+
+  dessinerPlan();
+  dessinerTram();
+
+  /* ================= Le voyage : la ligne parcourue seule ================= */
+  let voyage = null;
+  const lisse = () => (reduit ? "auto" : "smooth");
+  function monter() {
+    const actives = LENS_LIGNES[lensCourante];
+    itinJeton++;
+    voyage = { arrets: itin ? itin.r.arrets.map((a) => a.sid) : ORDRE_ST.filter((sid) => lignesDe(sid).some((l) => actives.includes(l))), i: 0, t: 0 };
+    $("#bord").setAttribute("aria-pressed", "true");
+    $("#bord").textContent = "Descendre ■";
+    Object.keys(rames).forEach((l) => { cancelAnimationFrame(rames[l].anim); rames[l].g.style.opacity = "0"; });
+    $("#duo").scrollIntoView({ behavior: lisse(), block: "start" });
+    etape();
+  }
+  function etape() {
+    const v = voyage; if (!v) return;
+    const sid = v.arrets[v.i];
+    stationCourante = sid;
+    rendre();
+    const tr = itin && v.i > 0 ? itin.r.troncons[v.i - 1] : null;
+    const l = itin ? itin.r.arrets[v.i].l : LENS_LIGNES[lensCourante].find((x) => LIGNES[x].arrets.includes(sid));
+    Object.keys(rames).forEach((k) => { if (k !== l) rames[k].g.style.opacity = "0"; });
+    const r = rameDe(l), cible = longueurA(l, ST[sid].x);
+    if (reduit) { r.g.style.opacity = "1"; r.pos = cible; poser(l, cible); }
+    else if (v.i === 0 || (tr && tr.pied)) rouler(l, Math.max(0, cible - 60), cible, 700);
+    else rouler(l, tr ? longueurA(l, ST[tr.de].x) : r.pos, cible, 1300);
+    const suivant = v.arrets[v.i + 1], tSuiv = itin ? itin.r.troncons[v.i] : null;
+    const note = tSuiv && tSuiv.change ? (tSuiv.pied ? " (correspondance à pied)" : ` (correspondance, ligne ${LIGNES[tSuiv.l].num})`) : "";
+    $("#voyage").innerHTML = suivant
+      ? `Station <b>${v.i + 1}</b> sur ${v.arrets.length} · <b>${esc(ST[sid].nom)}</b> · prochain arrêt : ${esc(ST[suivant].nom)}${note}`
+      : `<b>Terminus : ${esc(ST[sid].nom)}.</b> Tout le monde descend.`;
+    if (matchMedia("(max-width: 900px)").matches) { const li = $(`#bande .arret[data-s="${sid}"]`); if (li) li.scrollIntoView({ behavior: lisse(), block: "center" }); }
+    if (suivant) v.t = setTimeout(() => { v.i++; etape(); }, 4300);
+    else v.t = setTimeout(() => descendre(true), 3800);
+  }
+  function descendre(fini) {
+    if (!voyage) return;
+    clearTimeout(voyage.t); voyage = null;
+    $("#bord").setAttribute("aria-pressed", "false");
+    $("#bord").textContent = fini ? "Refaire le trajet ▸" : "Monter à bord ▸";
+    if (!fini) $("#voyage").textContent = "Une visite d'une minute, station par station.";
+    Object.keys(rames).forEach((l) => setTimeout(() => { if (!voyage) rames[l].g.style.opacity = "0"; }, 1200));
+  }
+
+  /* ================= Commandes ================= */
+  function choisirLigne(id, majHash) {
+    if (!LENS_LIGNES[id]) id = "builder";
+    descendre(false);
+    itin = null;
+    lensCourante = id;
+    if (!lignesDe(stationCourante).some((l) => LENS_LIGNES[id].includes(l))) stationCourante = "stratemind";
+    if (majHash) { try { history.replaceState(null, "", "#" + id); } catch (e) { /* adresse figée */ } }
+    rendre();
+    lancerRames();
+  }
+  function choisirItin(ids, majHash) {
+    descendre(false);
+    const r = ids.length ? itineraire(ids) : null;
+    itin = r ? { ids, r } : null;
+    if (itin && !r.arrets.some((a) => a.sid === stationCourante)) stationCourante = r.arrets[r.arrets.length - 1].sid;
+    if (!itin && !lignesDe(stationCourante).some((l) => LENS_LIGNES[lensCourante].includes(l))) stationCourante = "stratemind";
+    if (majHash) { try { history.replaceState(null, "", "#" + (itin ? (dossier ? adresseDossier(ids) : "itineraire-" + ids.join("-")) : lensCourante)); } catch (e) { /* adresse figée */ } }
+    rendre();
+    lancerRames();
+  }
+  function choisirStation(sid, defiler) {
+    descendre(false);
+    stationCourante = sid;
+    rendre();
+    if (defiler && matchMedia("(max-width: 900px)").matches) $("#fiche").scrollIntoView({ behavior: lisse(), block: "start" });
+  }
+  function montrerPanneau(pid) {
+    const el = $(`#p-${pid}`); if (!el) return;
+    el.scrollIntoView({ behavior: lisse(), block: "center" });
+    el.classList.remove("eclair"); void el.offsetWidth; el.classList.add("eclair");
+  }
+  $("#choix").addEventListener("click", (e) => { const b = e.target.closest("button[data-lens]"); if (b) choisirLigne(b.dataset.lens, true); });
+  $("#besoins").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-besoin]"); if (!b || b.disabled) return;
+    const n = b.dataset.besoin, ids = itin ? itin.ids.slice() : [];
+    choisirItin(ids.includes(n) ? ids.filter((x) => x !== n) : [...ids, n].slice(0, MAX_BESOINS), true);
+  });
+  $("#effacer").addEventListener("click", () => { choisirItin([], true); $("#besoins button").focus(); });
+  $("#bRetour").addEventListener("click", () => { if (dossier) choisirItin(dossier.besoins.slice(), true); });
+  $("#bande").addEventListener("click", (e) => { const a = e.target.closest("[data-panneau]"); if (a) { e.preventDefault(); e.stopPropagation(); montrerPanneau(a.dataset.panneau); } }, true);
+  const viaStation = (e) => { const g = e.target.closest("[data-s]"); if (g) choisirStation(g.dataset.s, true); };
+  $("#plan").addEventListener("click", viaStation);
+  $("#bande").addEventListener("click", viaStation);
+  $("#tram").addEventListener("click", (e) => { const g = e.target.closest("[data-p]"); if (g) montrerPanneau(g.dataset.p); });
+  $("#fiche").addEventListener("click", (e) => { const a = e.target.closest("[data-panneau]"); if (a) { e.preventDefault(); montrerPanneau(a.dataset.panneau); } });
+  const clavier = (fn) => (e) => { if ((e.key === "Enter" || e.key === " ") && e.target.closest("[data-s],[data-p]")) { e.preventDefault(); fn(e); } };
+  $("#plan").addEventListener("keydown", clavier(viaStation));
+  $("#bande").addEventListener("keydown", clavier(viaStation));
+  $("#tram").addEventListener("keydown", clavier((e) => montrerPanneau(e.target.closest("[data-p]").dataset.p)));
+  $("#bord").addEventListener("click", () => (voyage ? descendre(false) : monter()));
+  $("#copier").addEventListener("click", async (ev) => {
+    const b = ev.currentTarget;
+    try { await navigator.clipboard.writeText(P.email); b.textContent = "Adresse copiée"; }
+    catch (e) { const r = document.createRange(); r.selectNodeContents($("#courriel")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Sélectionnée : Ctrl+C"; }
+    setTimeout(() => (b.textContent = "Copier l'adresse"), 2400);
+  });
+  const lireHash = () => { const h = (location.hash || "").slice(1); return LENS_LIGNES[h] ? h : null; };
+  const lireItin = () => {
+    const h = (location.hash || "").slice(1);
+    if (!h.startsWith("itineraire-")) return null;
+    const ids = [...new Set(h.slice(11).split("-").filter((x) => besoinById[x]))].slice(0, MAX_BESOINS);
+    return ids.length ? ids : null;
+  };
+  window.addEventListener("hashchange", () => {
+    const d = CV.lireDossier((location.hash || "").slice(1));
+    if (d) { dossier = d; lensCourante = d.plein ? "growth" : "builder"; if (!itin || d.besoins.join() !== itin.ids.join()) choisirItin(d.besoins, false); else rendre(); return; }
+    const ids = lireItin(); if (ids) { if (!itin || ids.join() !== itin.ids.join()) choisirItin(ids, false); return; }
+    const h = lireHash(); if (h && (h !== lensCourante || itin)) choisirLigne(h, false);
+  });
+
+  dossier = CV.lireDossier((location.hash || "").slice(1));
+  lensCourante = lireHash() || (dossier && dossier.plein ? "growth" : "builder");
+  const itinDepart = dossier ? dossier.besoins : lireItin();
+  if (itinDepart) { const r = itineraire(itinDepart); itin = { ids: itinDepart, r }; stationCourante = r.arrets[r.arrets.length - 1].sid; }
+  rendre();
+  setTimeout(lancerRames, 500);
+
+  /* Sur un petit écran, chaque plan s'ouvre sur sa partie la plus récente */
+  ["#defile", "#defileTram"].forEach((s) => { const d = $(s); if (d.scrollWidth > d.clientWidth) d.scrollLeft = s === "#defile" ? d.scrollWidth : (d.scrollWidth - d.clientWidth) / 2; });
+})();
+</script>
+</body>
+</html>
