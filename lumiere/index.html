@@ -284,6 +284,7 @@ footer a { color: var(--texte-2); }
 .r-nom i { font-weight: 500; }
 .r-role { font: 600 8.8pt var(--f-console); letter-spacing: .08em; text-transform: uppercase; margin-top: 2mm !important; }
 .r-coord { margin-top: 1.2mm !important; color: #4a4f5c; font-size: 7.8pt; }
+.r-coord a, .r-qr { color: inherit; text-decoration: none; }
 .r-pour { display: flex; gap: 4mm; align-items: flex-start; }
 .r-pour-txt { display: grid; gap: .9mm; justify-items: end; text-align: right; max-width: 52mm; }
 .r-ent { font: 600 9.8pt/1.15 var(--f-console); letter-spacing: .04em; text-transform: uppercase; }
@@ -961,7 +962,7 @@ footer a { color: var(--texte-2); }
     try {
       const qr = window.qrcode(0, "M"); qr.addData(el.dataset.url); qr.make();
       el.innerHTML = qr.createSvgTag({ cellSize: 2, margin: 0, scalable: true });
-      el.setAttribute("role", "img"); el.setAttribute("aria-label", "Code QR vers le même réglage en ligne");
+      el.setAttribute("aria-label", "Code QR : le même réglage en ligne");
     } catch (err) { el.innerHTML = ""; }
   }
   function feuilleRegie(caps) {
@@ -999,11 +1000,11 @@ footer a { color: var(--texte-2); }
           <p class="r-etiq">Fiche de régie · conduite lumière · ${esc(P.edition)}</p>
           <h1 class="r-nom"><i>${esc(P.first)}</i> ${esc(P.last)}</h1>
           <p class="r-role">${esc(L.title)}</p>
-          <p class="r-coord">${esc(P.city)} · ${esc(P.email)} · ${esc(P.siteLabel)}</p>
+          <p class="r-coord">${esc(P.city)} · <a href="mailto:${esc(P.email)}">${esc(P.email)}</a>${liens.lumiere ? ` · <a href="${esc(enLigne)}">${esc(new URL(liens.lumiere).host)}</a>` : ""}</p>
         </div>
         <div class="r-pour">
           <div class="r-pour-txt">${pour}<p class="r-qr-note">Le même réglage en ligne, avec les faders.</p></div>
-          <div class="r-qr" id="regieQr" data-url="${esc(enLigne)}"></div>
+          <a class="r-qr" id="regieQr" href="${esc(enLigne)}" data-url="${esc(enLigne)}"></a>
         </div>
       </header>
       <section class="r-projo" aria-label="Projecteurs">
